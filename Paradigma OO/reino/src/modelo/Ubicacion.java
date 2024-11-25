@@ -2,14 +2,13 @@ package modelo;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
 public class Ubicacion {
     private String nombre;
     private List<Criatura> criaturas;
     private boolean esNeutral;
     private List<Ubicacion> caminosPosibles;
-    private Runnable eventoEspecial;
+    private String mensajeEventoEspecial;
     private boolean combateRealizado = false; // Variable para controlar si el combate ya se realizó.
 
     public Ubicacion(String nombre, boolean esNeutral) {
@@ -60,38 +59,26 @@ public class Ubicacion {
             Criatura dragon = new Dragon();
             this.criaturas.add(dragon);
             this.esNeutral = false;
-            this.eventoEspecial = (() -> {
-                JOptionPane.showMessageDialog(null, "¡Has matado al dragon del norte!  \n" +
-                        "Ya puedes reclamar la Espada de fuego");
-            });
+            this.mensajeEventoEspecial = "¡Has matado al dragon del norte!  \nYa puedes reclamar la Espada de fuego";
         } else if (nombre.contains("Pantano Oscuro")) {
             for (int i = 0; i < 5; i++) {
                 Criatura espectro = new Espectro();
                 this.criaturas.add(espectro);
             }
             this.esNeutral = false;
-            this.eventoEspecial = (() -> {
-                JOptionPane.showMessageDialog(null, "¡Has vencido a los espectros del pantano!  \n" +
-                        "Ya puedes reclamar el Arco de Luz");
-            });
+            this.mensajeEventoEspecial = "¡Has vencido a los espectros del pantano!  \nYa puedes reclamar el Arco de Luz";
         } else if (nombre.contains("Aldea de los Sirith")) {
             for (int i = 0; i < 3; i++) {
                 Criatura troll = new Troll();
                 this.criaturas.add(troll);
             }
             this.esNeutral = false;
-            this.eventoEspecial = (() -> {
-                JOptionPane.showMessageDialog(null, "¡Has limpiado la aldea de trolls!  \n" +
-                        "Ya puedes reclamar el Escudo de titanio");
-            });
+            this.mensajeEventoEspecial = "¡Has limpiado la aldea de trolls!  \nYa puedes reclamar el Escudo de titanio";
         } else if (nombre.contains("Bosque de los Susurros")) {
             Criatura espectro = new Espectro();
             this.criaturas.add(espectro);
             this.esNeutral = false; // Neutral porque solo hay un evento
-            this.eventoEspecial = (() -> {
-                JOptionPane.showMessageDialog(null, "¡Has encontrado el amuleto perdido! \n" +
-                        "Decides quedartelo, reclamalo para equiparlo");
-            });
+            this.mensajeEventoEspecial = "¡Has encontrado el amuleto perdido! \nDecides quedartelo, reclamalo para equiparlo";
         }
     }
 
@@ -115,8 +102,8 @@ public class Ubicacion {
         return esNeutral;
     }
 
-    public Runnable getEventoEspecial() {
-        return eventoEspecial;
+    public String getMensajeEventoEspecial() {
+        return mensajeEventoEspecial;
     }
 
     public boolean isCombateRealizado() {

@@ -3,6 +3,7 @@ package vista;
 import java.awt.*;
 import javax.swing.*;
 import java.util.*;
+
 import controlador.ControladorJuego;
 
 public class VistaEstadoPersonaje extends JPanel {

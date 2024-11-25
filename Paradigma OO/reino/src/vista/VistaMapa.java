@@ -1,12 +1,11 @@
 package vista;
 
-import controlador.ControladorJuego;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import controlador.ControladorJuego;
 
 public class VistaMapa extends JPanel {
     private JLabel titulo;
@@ -70,18 +69,18 @@ public class VistaMapa extends JPanel {
         }
 
         // Añadir botones de ubicaciones en las posiciones específicas
-        agregarBotonUbicacion(ubicaciones.get(0), 0, 1);   // Entrada del Reino
-        agregarBotonUbicacion(ubicaciones.get(1), 1, 1);   // Camino del Bosque
-        agregarBotonUbicacion(ubicaciones.get(2), 2, 1);   // Bosque Encantado
-        agregarBotonUbicacion(ubicaciones.get(3), 3, 0);   // Colina del Viento (bifurcación izquierda)
-        agregarBotonUbicacion(ubicaciones.get(4), 3, 2);   // Lago de Cristal (bifurcación derecha)
-        agregarBotonUbicacion(ubicaciones.get(5), 4, 1);   // Caverna Oscura
-        agregarBotonUbicacion(ubicaciones.get(6), 5, 0);   // Puente Antiguo (bifurcación izquierda)
-        agregarBotonUbicacion(ubicaciones.get(7), 5, 2);   // Llanura Rocosa (bifurcación derecha)
-        agregarBotonUbicacion(ubicaciones.get(8), 6, 1);   // Montaña Helada (en el centro)
-        agregarBotonUbicacion(ubicaciones.get(9), 7, 1);   // Pantano de la Niebla
-        agregarBotonUbicacion(ubicaciones.get(10), 8, 1);  // Pueblo Abandonado
-        agregarBotonUbicacion(ubicaciones.get(11), 9, 1);  // Torre de Vigilancia
+        agregarBotonUbicacion(ubicaciones.get(0), 0, 1); // Entrada del Reino
+        agregarBotonUbicacion(ubicaciones.get(1), 1, 1); // Camino del Bosque
+        agregarBotonUbicacion(ubicaciones.get(2), 2, 1); // Bosque Encantado
+        agregarBotonUbicacion(ubicaciones.get(3), 3, 0); // Colina del Viento (bifurcación izquierda)
+        agregarBotonUbicacion(ubicaciones.get(4), 3, 2); // Lago de Cristal (bifurcación derecha)
+        agregarBotonUbicacion(ubicaciones.get(5), 4, 1); // Caverna Oscura
+        agregarBotonUbicacion(ubicaciones.get(6), 5, 0); // Puente Antiguo (bifurcación izquierda)
+        agregarBotonUbicacion(ubicaciones.get(7), 5, 2); // Llanura Rocosa (bifurcación derecha)
+        agregarBotonUbicacion(ubicaciones.get(8), 6, 1); // Montaña Helada (en el centro)
+        agregarBotonUbicacion(ubicaciones.get(9), 7, 1); // Pantano de la Niebla
+        agregarBotonUbicacion(ubicaciones.get(10), 8, 1); // Pueblo Abandonado
+        agregarBotonUbicacion(ubicaciones.get(11), 9, 1); // Torre de Vigilancia
         agregarBotonUbicacion(ubicaciones.get(12), 10, 0); // Bosque Sombrío (bifurcación izquierda)
         agregarBotonUbicacion(ubicaciones.get(13), 10, 2); // Ruinas Antiguas (bifurcación derecha)
         agregarBotonUbicacion(ubicaciones.get(14), 11, 1); // Campo de Batalla
@@ -112,14 +111,30 @@ public class VistaMapa extends JPanel {
         botonUbicacion.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambio de cursor al pasar por encima
 
         botonUbicacion.addActionListener(e -> {
+            botonUbicacion.setEnabled(false); // Deshabilitar el botón actual inmediatamente
             controlador.avanzarUbicacion(nombreUbicacion);
             actualizarVisibilidadUbicaciones(); // Actualiza los caminos disponibles
+            mostrarMensajeEventoEspecial(nombreUbicacion); // Mostrar mensaje del evento especial
         });
 
         int posicion = fila * 3 + columna;
         panelMapa.remove(posicion);
         panelMapa.add(botonUbicacion, posicion);
         botonesUbicaciones.put(nombreUbicacion, botonUbicacion);
+    }
+
+    public void actualizar(String ubicacionActual, List<String> ubicaciones, List<String> caminosDisponibles) {
+        this.ubicacionActual = ubicacionActual;
+        this.ubicaciones = ubicaciones;
+        this.caminosDisponibles = caminosDisponibles;
+        actualizarVisibilidadUbicaciones();
+    }
+
+    private void mostrarMensajeEventoEspecial(String nombreUbicacion) {
+        String mensaje = controlador.obtenerMensajeEventoEspecial(nombreUbicacion);
+        if (mensaje != null) {
+            JOptionPane.showMessageDialog(this, mensaje);
+        }
     }
 
     public void actualizarVisibilidadUbicaciones() {

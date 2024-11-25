@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+
 import controlador.ControladorJuego;
 
 public class Juego {
@@ -89,11 +90,8 @@ public class Juego {
         }
     }
 
-    public void iniciarEvento() {
-        Ubicacion ubicacion = mapa.getUbicacionActual();
-        if (ubicacion.getEventoEspecial() != null) {
-            ubicacion.getEventoEspecial().run(); // Ejecutar el evento especial si está configurado.
-        }
+    public List<Ubicacion> getUbicacionesActuales() {
+        return mapa.getUbicaciones();
     }
 
     public void actualizarMapaVista(ControladorJuego controlador) {

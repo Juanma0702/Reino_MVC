@@ -8,16 +8,11 @@ import controlador.ControladorJuego;
 public class VistaNombre extends JPanel {
     private ControladorJuego controlador;
     private JTextField campoNombre;
-    private Image imagenFondo = new ImageIcon("fC:/resources/menu.jpg").getImage(); // Ruta de la imagen de fondo
+    private Image imagenFondo = new ImageIcon(
+            "Paradigma OO\\reino\\src\\resources\\menu.png").getImage();
 
     public VistaNombre(ControladorJuego controlador) {
         this.controlador = controlador;
-
-        try {
-            imagenFondo = new ImageIcon("C:/resources/menu.jpg").getImage();
-        } catch (Exception e) {
-            System.out.println("Error al cargar la imagen de fondo: " + e.getMessage());
-        }
 
         // Configuración del layout principal
         setLayout(new GridBagLayout());
@@ -25,9 +20,32 @@ public class VistaNombre extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); // Espaciado entre componentes
 
         // Etiqueta y campo de texto
-        JLabel etiquetaNombre = new JLabel("Ingrese su nombre:");
-        etiquetaNombre.setFont(new Font("Arial", Font.PLAIN, 18));
-        etiquetaNombre.setForeground(Color.BLACK); // Texto blanco para destacar
+        JLabel etiquetaNombre = new JLabel("Ingrese su nombre:") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Dibuja el contorno negro
+                g2.setColor(Color.BLACK);
+                g2.setFont(getFont());
+                FontMetrics fm = g2.getFontMetrics();
+                int x = 0;
+                int y = fm.getAscent();
+                g2.drawString(getText(), x - 1, y - 1);
+                g2.drawString(getText(), x - 1, y + 1);
+                g2.drawString(getText(), x + 1, y - 1);
+                g2.drawString(getText(), x + 1, y + 1);
+
+                // Dibuja el texto blanco
+                g2.setColor(getForeground());
+                g2.drawString(getText(), x, y);
+
+                g2.dispose();
+            }
+        };
+        etiquetaNombre.setFont(new Font("Arial", Font.BOLD, 24));
+        etiquetaNombre.setForeground(Color.WHITE); // Texto blanco para destacar
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -107,7 +125,7 @@ public class VistaNombre extends JPanel {
         g2d.setColor(Color.WHITE);
         g2d.drawString(texto, x, y); // Dibuja el texto principal encima
     }
-    
+
     /**
      * Método para crear un botón estilizado.
      * 
@@ -121,11 +139,8 @@ public class VistaNombre extends JPanel {
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false); // Elimina el borde de enfoque
-        boton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-        // Espacio para agregar imágenes al botón (opcional)
-        // boton.setIcon(new ImageIcon("ruta/a/imagen.png"));
+        boton.setHorizontalTextPosition(SwingConstants.CENTER);
+        boton.setVerticalTextPosition(SwingConstants.BOTTOM);
 
         return boton;
     }

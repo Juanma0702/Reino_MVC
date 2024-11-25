@@ -70,10 +70,6 @@ public class ControladorJuego {
         cambiarVista(new VistaMapa(this, ubicacionActual, ubicaciones, caminosDisponibles));
     }
 
-    public void iniciarEvento() {
-        juego.iniciarEvento();
-    }
-
     public void mostrarVistaCombate(String resultadoCombate, boolean victoria, boolean combateFinal) {
         VistaCombate.mostrar(this, resultadoCombate, victoria, combateFinal);
     }
@@ -84,6 +80,19 @@ public class ControladorJuego {
 
     public String getUbicacionActual() {
         return juego.getUbicacionActual();
+    }
+
+    public List<Ubicacion> getUbicacionesActuales() {
+        return juego.getUbicacionesActuales();
+    }
+
+    public String obtenerMensajeEventoEspecial(String nombreUbicacion) {
+        for (Ubicacion ubicacion : juego.getUbicacionesActuales()) {
+            if (ubicacion.getNombre().equals(nombreUbicacion) && ubicacion.getMensajeEventoEspecial() != null) {
+                return ubicacion.getMensajeEventoEspecial();
+            }
+        }
+        return null;
     }
 
     public List<String> getCaminosDisponibles() {

@@ -1,13 +1,9 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
-import java.util.List;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+
 import controlador.ControladorJuego;
 
 public class VistaCombate extends JPanel {
@@ -56,7 +52,6 @@ public class VistaCombate extends JPanel {
                 }
             } else {
                 areaCombate.setText(areaCombate.getText() + "<br>¡Has ganado el combate! Felicitaciones.");
-                controlador.iniciarEvento();
 
                 if (controlador != null) {
                     controlador.mostrarVistaMapa(); // Vuelve al mapa
