@@ -12,24 +12,58 @@ public class VistaHub extends JPanel {
     private ControladorJuego controlador;
     private String nombreJugador;
     private String clase;
+    private BufferedImage backgroundImage;
 
     public VistaHub(ControladorJuego controlador, String nombreJugador, String clase) {
         this.controlador = controlador;
         this.nombreJugador = nombreJugador;
         this.clase = clase;
 
+        // Cargar la imagen de fondo
+        try {
+            backgroundImage = ImageIO.read(new File("Paradigma OO\\reino\\src\\resources\\hub.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Configuración principal del panel
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Márgenes externos
 
         // Título
-        JLabel titulo = new JLabel("Hub Principal", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        JLabel titulo = new JLabel("Hub Principal", JLabel.CENTER) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // Dibuja el contorno
+                g2.setColor(Color.BLACK);
+                g2.setFont(getFont());
+                FontMetrics fm = g2.getFontMetrics();
+                int textWidth = fm.stringWidth(getText());
+                int x = (getWidth() - textWidth) / 2;
+                int y = fm.getAscent();
+                g2.drawString(getText(), x - 1, y - 1);
+                g2.drawString(getText(), x - 1, y + 1);
+                g2.drawString(getText(), x + 1, y - 1);
+                g2.drawString(getText(), x + 1, y + 1);
+
+                // Dibuja el texto
+                g2.setColor(getForeground());
+                g2.drawString(getText(), x, y);
+
+                g2.dispose();
+            }
+        };
+        titulo.setFont(new Font("Arial", Font.BOLD, 30));
+        titulo.setForeground(Color.WHITE);
         titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // Espaciado con el resto del contenido
         add(titulo, BorderLayout.NORTH);
 
         // Panel central para los botones
         JPanel panelBotones = new JPanel(new GridBagLayout());
+        panelBotones.setOpaque(false);
         panelBotones.setBorder(BorderFactory.createEmptyBorder(100, 220, 100, 220)); // Márgenes internos
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 20, 20, 20); // Espaciado entre botones
@@ -38,7 +72,8 @@ public class VistaHub extends JPanel {
         gbc.weighty = 1.0;
 
         // Crear y configurar botones
-        JButton botonMapa = crearBoton("Mapa", "C:\\Users\\MSI\\Desktop\\REINO_MVC\\Reino_MVC\\Paradigma OO\\reino\\src\\resources\\Mapa.png");
+        JButton botonMapa = crearBoton("Mapa",
+                "C:\\Users\\MSI\\Desktop\\REINO_MVC\\Reino_MVC\\Paradigma OO\\reino\\src\\resources\\Mapa.png");
         JButton botonMisiones = crearBoton("Misiones", "C:/re/inventario.jpeg");
         JButton botonEstadoPersonaje = crearBoton("Estado Personaje", "C:/re/misiones.jpeg");
         JButton botonInventario = crearBoton("Inventario", "C:/re/salir.jpeg");
@@ -66,6 +101,7 @@ public class VistaHub extends JPanel {
         // Panel inferior con el botón para cerrar el programa
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton botonCerrar = crearBoton("Salir", "");
+        panelInferior.setOpaque(false);
         botonCerrar.setBackground(new Color(178, 34, 34)); // Fondo rojo oscuro
         botonCerrar.setFont(new Font("Arial", Font.BOLD, 25));
         botonCerrar.setPreferredSize(new Dimension(100, 40));
@@ -75,9 +111,9 @@ public class VistaHub extends JPanel {
         // Acciones de los botones
         botonCerrar.addActionListener(e -> System.exit(0)); // Cierra la aplicación
         botonMapa.addActionListener(e -> controlador.mostrarVistaMapa());
-        //botonMisiones.addActionListener(e -> controlador.mostrarVistaMisiones());
+        // botonMisiones.addActionListener(e -> controlador.mostrarVistaMisiones());
         botonEstadoPersonaje.addActionListener(e -> controlador.mostrarVistaEstadoPersonaje());
-        //botonInventario.addActionListener(e -> controlador.mostrarVistaInventario());
+        // botonInventario.addActionListener(e -> controlador.mostrarVistaInventario());
     }
 
     private JButton crearBoton(String texto, String iconoPath) {
@@ -101,7 +137,8 @@ public class VistaHub extends JPanel {
                     if (icono.getIconWidth() == -1) {
                         System.err.println("Error al cargar la imagen, formato inválido o corrupto: " + iconoPath);
                     } else {
-                        Image imagenEscalada = icono.getImage().getScaledInstance(boton.getPreferredSize().width - 50, boton.getPreferredSize().height - 50, Image.SCALE_SMOOTH);
+                        Image imagenEscalada = icono.getImage().getScaledInstance(boton.getPreferredSize().width - 50,
+                                boton.getPreferredSize().height - 50, Image.SCALE_SMOOTH);
                         boton.setIcon(new ImageIcon(imagenEscalada));
                         boton.setHorizontalTextPosition(SwingConstants.CENTER);
                         boton.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -113,5 +150,13 @@ public class VistaHub extends JPanel {
             }
         }
         return boton;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
