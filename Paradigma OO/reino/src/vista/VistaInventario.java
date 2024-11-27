@@ -25,6 +25,8 @@ public class VistaInventario extends JPanel {
         this.controlador = controlador;
         this.inventario = inventario != null ? inventario : new ArrayList<>(); // Asegúrate de que la lista no sea null
 
+        System.out.println("Inicializando VistaInventario con " + this.inventario.size() + " objetos.");
+
         // Configuración principal del panel
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen exterior
@@ -39,29 +41,37 @@ public class VistaInventario extends JPanel {
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
         panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
 
-        // Crear un panel para cada objeto en el inventario
-        for (Map<String, String> datos : inventario) {
-            if (datos != null) {
-                JPanel panelObjeto = new JPanel(new BorderLayout());
-                panelObjeto.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.GRAY, 1), // Borde gris
-                    BorderFactory.createEmptyBorder(10, 10, 10, 10) // Margen interno
-                ));
-                
-                // Panel izquierdo: descripción del objeto
-                JPanel panelDescripcion = new JPanel();
-                panelDescripcion.setLayout(new BoxLayout(panelDescripcion, BoxLayout.Y_AXIS));
-                panelDescripcion.setOpaque(false); // Sin color de fondo
-                List<JLabel> labels = obtenerLabels(datos);
-                for (JLabel label : labels) {
-                    label.setFont(new Font("Arial", Font.PLAIN, 14));
-                    panelDescripcion.add(label);
-                }
-                panelObjeto.add(panelDescripcion, BorderLayout.CENTER);
+        if (this.inventario.isEmpty()) {
+            // Mostrar mensaje si el inventario está vacío
+            JLabel mensajeVacio = new JLabel("No hay objetos en el inventario.", JLabel.CENTER);
+            mensajeVacio.setFont(new Font("Arial", Font.PLAIN, 16));
+            mensajeVacio.setForeground(Color.RED);
+            panelCentral.add(mensajeVacio);
+        } else {
+            // Crear un panel para cada objeto en el inventario
+            for (Map<String, String> datos : inventario) {
+                if (datos != null) {
+                    System.out.println("Agregando objeto: " + datos.get("nombre"));
+                    JPanel panelObjeto = new JPanel(new BorderLayout());
+                    panelObjeto.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(Color.GRAY, 1),
+                        BorderFactory.createEmptyBorder(10, 10, 10, 10)
+                    ));
+                    
+                    // Panel izquierdo: descripción del objeto
+                    JPanel panelDescripcion = new JPanel();
+                    panelDescripcion.setLayout(new BoxLayout(panelDescripcion, BoxLayout.Y_AXIS));
+                    panelDescripcion.setOpaque(false); // Sin color de fondo
+                    List<JLabel> labels = obtenerLabels(datos);
+                    for (JLabel label : labels) {
+                        panelDescripcion.add(label);
+                    }
+                    panelObjeto.add(panelDescripcion, BorderLayout.CENTER);
 
-                // Agregar el objeto al panel central
-                panelCentral.add(panelObjeto);
-                panelCentral.add(Box.createVerticalStrut(10)); // Espaciado entre objetos
+                    // Agregar el objeto al panel central
+                    panelCentral.add(panelObjeto);
+                    panelCentral.add(Box.createVerticalStrut(10)); // Espaciado entre objetos
+                }
             }
         }
 

@@ -113,4 +113,24 @@ public class Ubicacion {
     public void setCombateRealizado(boolean combateRealizado) {
         this.combateRealizado = combateRealizado;
     }
+
+    public void marcarMisionesReclamables() {
+        if (nombre.contains("Montaña Helada")) {
+            Misiones.getInstancia(null).getObjetos().stream()
+                .filter(m -> m.getNombre().equals("Derrota al Dragón del Norte"))
+                .forEach(m -> m.encontrado());
+        } else if (nombre.contains("Pantano Oscuro")) {
+            Misiones.getInstancia(null).getObjetos().stream()
+                .filter(m -> m.getNombre().equals("Elimina a los Espectros del Pantano"))
+                .forEach(m -> m.encontrado());
+        } else if (nombre.contains("Aldea de los Sirith")) {
+            Misiones.getInstancia(null).getObjetos().stream()
+                .filter(m -> m.getNombre().equals("Limpia la Aldea de los Trolls"))
+                .forEach(m -> m.encontrado());
+        } else if (nombre.contains("Bosque de los Susurros")) {
+            Misiones.getInstancia(null).getObjetos().stream()
+                .filter(m -> m.getNombre().equals("Recupera el Amuleto Perdido"))
+                .forEach(m -> m.encontrado());
+        }
+    }
 }

@@ -70,6 +70,7 @@ public class Juego {
             for (Ubicacion ubicacion : mapa.getUbicaciones()) {
                 if (ubicacion.getNombre().equals(nombreUbicacion)) {
                     mapa.avanzar(ubicacion);
+                    ubicacion.marcarMisionesReclamables(); // Marcar misiones como reclamables
                     if (!ubicacion.esNeutral() && !ubicacion.isCombateRealizado()) {
                         ubicacion.setCombateRealizado(true);
                         Combate combate = new Combate(personajeActual, ubicacion.getCriaturas(), true);

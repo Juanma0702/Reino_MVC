@@ -23,16 +23,18 @@ public class ControladorJuego {
     }
 
     public void iniciarJuego() {
-        // Instancia la vista principal
+        System.out.println("Iniciando juego...");
         VistaPrincipal.getInstancia().setVisible(true);
         mostrarVistaNombre();
     }
 
     public void cambiarVista(JPanel nuevaVista) {
+        System.out.println("Cambiando vista a: " + nuevaVista.getClass().getSimpleName());
         VistaPrincipal.getInstancia().setVista(nuevaVista);
     }
 
     public void seleccionarPersonaje(String nombreJugador, String clase) {
+        System.out.println("Seleccionando personaje: " + nombreJugador + ", Clase: " + clase);
         this.nombreJugador = nombreJugador;
         this.clase = clase;
         juego.seleccionarPersonaje(nombreJugador, clase);
@@ -40,37 +42,33 @@ public class ControladorJuego {
     }
 
     public void mostrarVistaHub() {
+        System.out.println("Mostrando vista Hub");
         cambiarVista(new VistaHub(this, nombreJugador, clase));
     }
 
     public void mostrarVistaMisiones() {
-        List<Objeto> misiones = Misiones.getInstancia(null).getObjetos();
-        List<Map<String, String>> datosMisiones = new ArrayList<>();
-        for (Objeto mision : misiones) {
-            if (mision != null) {
-                datosMisiones.add(mision.getDatos());
-            }
-        }
-        cambiarVista(new VistaMisionesSecundarias(this, datosMisiones));
+        System.out.println("Mostrando vista Misiones");
+        cambiarVista(new VistaMisionesSecundarias(this));
     }
 
     public void mostrarVistaInventario() {
+        System.out.println("Mostrando vista Inventario");
         List<Objeto> inventario = juego.getInventario();
         List<Map<String, String>> datosInventario = new ArrayList<>();
         for (Objeto objeto : inventario) {
-            if (objeto != null) {
-                datosInventario.add(objeto.getDatos());
-            }
+            datosInventario.add(objeto.getDatos());
         }
         cambiarVista(new VistaInventario(this, datosInventario));
     }
 
     public void mostrarVistaEstadoPersonaje() {
+        System.out.println("Mostrando vista Estado Personaje");
         Map<String, String> datosPersonaje = juego.obtenerDatosPersonaje();
         cambiarVista(new VistaEstadoPersonaje(this, datosPersonaje));
     }
 
     public void mostrarVistaNombre() {
+        System.out.println("Mostrando vista Nombre");
         cambiarVista(new VistaNombre(this));
     }
 
@@ -81,11 +79,13 @@ public class ControladorJuego {
     }
 
     public void avanzarUbicacion(String nombreUbicacion) {
+        System.out.println("Avanzando a ubicación: " + nombreUbicacion);
         juego.avanzarUbicacion(nombreUbicacion, this);
         actualizarMapaVista(); // Asegurarse de actualizar la vista del mapa después de avanzar
     }
 
     public void mostrarVistaMapa() {
+        System.out.println("Mostrando vista Mapa");
         String ubicacionActual = juego.getUbicacionActual();
         List<String> ubicaciones = juego.getUbicaciones();
         List<String> caminosDisponibles = juego.getCaminosDisponibles();
@@ -93,18 +93,29 @@ public class ControladorJuego {
     }
 
     public void mostrarVistaCombate(String resultadoCombate, boolean victoria, boolean combateFinal) {
+        System.out.println("Mostrando vista Combate");
         VistaCombate.mostrar(this, resultadoCombate, victoria, combateFinal);
     }
 
     public void reiniciarJuego() {
+        System.out.println("Reiniciando juego...");
         // Lógica para reiniciar el juego
     }
 
     public void reclamarObjeto(String nombreObjeto) {
+        System.out.println("Reclamando objeto: " + nombreObjeto);
         Objeto objeto = obtenerObjetoPorNombre(nombreObjeto);
-        if (objeto != null) {
+        if (objeto != null && objeto.esReclamable()) {
             objeto.reclamar(juego.getPersonaje());
+            mostrarVistaInventario(); // Actualizar la vista del inventario después de reclamar el objeto
+        } else {
+            System.out.println("El objeto no es reclamable o no existe.");
         }
+    }
+
+    public boolean esMisionReclamable(String nombreMision) {
+        return Misiones.getInstancia(null).getObjetos().stream()
+            .anyMatch(m -> m.getNombre().equals(nombreMision) && m.esReclamable());
     }
 
     public Objeto obtenerObjetoPorNombre(String nombre) {
@@ -115,13 +126,7 @@ public class ControladorJuego {
         List<Objeto> misiones = Misiones.getInstancia(null).getObjetos();
         List<Map<String, String>> datosMisiones = new ArrayList<>();
         for (Objeto o : misiones) {
-            Map<String, String> datos = new HashMap<>();
-            datos.put("nombre", o.getNombre());
-            datos.put("descripcion", o.getDescripcion());
-            datos.put("ubicacion", o.getUbicacion().getNombre());
-            datos.put("criaturas", String.valueOf(o.getCriaturas().size()));
-            datos.put("reclamable", String.valueOf(o.esReclamable()));
-            datosMisiones.add(datos);
+            datosMisiones.add(o.getDatos());
         }
         return datosMisiones;
     }
@@ -130,12 +135,7 @@ public class ControladorJuego {
         List<Objeto> inventario = juego.getInventario();
         List<Map<String, String>> datosInventario = new ArrayList<>();
         for (Objeto o : inventario) {
-            Map<String, String> datos = new HashMap<>();
-            datos.put("nombre", o.getNombre());
-            datos.put("descripcion", o.getDescripcion());
-            datos.put("ubicacion", o.getUbicacion().getNombre());
-            datos.put("criaturas", String.valueOf(o.getCriaturas().size()));
-            datosInventario.add(datos);
+            datosInventario.add(o.getDatos());
         }
         return datosInventario;
     }
@@ -149,8 +149,8 @@ public class ControladorJuego {
     }
 
     public String obtenerMensajeEventoEspecial(String nombreUbicacion) {
-        for (Ubicacion ubicacion : juego.getUbicacionesActuales()) {
-            if (ubicacion.getNombre().equals(nombreUbicacion) && ubicacion.getMensajeEventoEspecial() != null) {
+        for (Ubicacion ubicacion : getUbicacionesActuales()) {
+            if (ubicacion.getNombre().equals(nombreUbicacion)) {
                 return ubicacion.getMensajeEventoEspecial();
             }
         }

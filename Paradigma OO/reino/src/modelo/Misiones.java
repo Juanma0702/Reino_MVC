@@ -22,6 +22,7 @@ public class Misiones {
             }
             instancia.objetos.add(o);
         }
+        System.out.println("Misiones actuales: " + instancia.objetos.size());
         return instancia;
     }
 
