@@ -65,6 +65,12 @@ public class Juego {
         return Collections.emptyList();
     }
 
+    public void aplicarMejora(String opcionMejora) {
+        if (personajeActual != null) {
+            personajeActual.subirNivel(opcionMejora);
+        }
+    }
+
     public void avanzarUbicacion(String nombreUbicacion, ControladorJuego controlador) {
         if (mapa != null) {
             for (Ubicacion ubicacion : mapa.getUbicaciones()) {
@@ -81,7 +87,7 @@ public class Juego {
                     } else if (ubicacion.esNeutral()) {
                         personajeActual.restaurarVida(); // Restaurar vida en ubicaciones neutrales.
                         for (int i = personajeActual.cantidadDeNiveles(); i > 0; i--) {
-                            personajeActual.subirNivel();
+                            controlador.mostrarOpcionesMejora(); // Mostrar opciones de mejora
                         }
                     }
                     controlador.actualizarMapaVista();

@@ -20,6 +20,7 @@ public class VistaMapa extends JPanel {
     private List<String> ubicaciones;
     private List<String> caminosDisponibles;
     private BufferedImage backgroundImage; // Añadir esta línea
+    private JLabel mejorasRestantesLabel;
 
     // Constructor
     public VistaMapa(ControladorJuego controlador, String ubicacionActual, List<String> ubicaciones,
@@ -178,5 +179,35 @@ public class VistaMapa extends JPanel {
 
         panelMapa.revalidate();
         panelMapa.repaint();
+    }
+
+    public void mostrarOpcionesMejora(int mejorasRestantes) {
+        String mensaje = "Mejoras restantes: " + mejorasRestantes;
+        Object[] opciones = {"Mejorar Vida", "Mejorar Ataque", "Mejorar Defensa"};
+        int opcionElegida = JOptionPane.showOptionDialog(
+                this,
+                mensaje,
+                "Opciones de Mejora",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                opciones,
+                opciones[0]);
+
+        if (opcionElegida != JOptionPane.CLOSED_OPTION) {
+            switch (opciones[opcionElegida].toString()) {
+                case "Mejorar Vida":
+                    controlador.aplicarMejora("vida");
+                    break;
+                case "Mejorar Ataque":
+                    controlador.aplicarMejora("ataque");
+                    break;
+                case "Mejorar Defensa":
+                    controlador.aplicarMejora("defensa");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Opción de mejora desconocida: " + opciones[opcionElegida]);
+            }
+        }
     }
 }

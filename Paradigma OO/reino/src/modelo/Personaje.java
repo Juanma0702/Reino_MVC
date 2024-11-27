@@ -59,17 +59,22 @@ public abstract class Personaje {
         return inventario;
     }
 
-
-    public void aplicarMejora(Objeto objeto) {
-        // implementation of aplicarMejora
-    }
-
-    public void subirNivel() {
-        // Implementar la lógica para subir de nivel
-        nivelAtaque += 5;
-        nivelDefensa += 5;
-        maxVida += 10;
-        puntosVida = maxVida;
+    public void subirNivel(String opcionMejora) {
+        experiencia -= 100; // Restar 100 puntos de experiencia por subir de nivel
+        switch (opcionMejora) {
+            case "vida":
+                maxVida += 10;
+                puntosVida = maxVida;
+                break;
+            case "ataque":
+                nivelAtaque += 5;
+                break;
+            case "defensa":
+                nivelDefensa += 5;
+                break;
+            default:
+                throw new IllegalArgumentException("Opción de mejora desconocida: " + opcionMejora);
+        }
     }
 
     // Métodos abstractos para el sistema de combate

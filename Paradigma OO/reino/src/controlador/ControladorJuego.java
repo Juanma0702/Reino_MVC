@@ -10,7 +10,7 @@ public class ControladorJuego {
     private Juego juego;
     private String nombreJugador;
     private String clase;
-    private VistaMapa vistaMapa; // Añadir esta línea
+    private VistaMapa vistaMapa;
 
     private ControladorJuego() {
         juego = new Juego();
@@ -173,5 +173,23 @@ public class ControladorJuego {
 
     public List<String> getCaminosDisponibles() {
         return juego.getCaminosDisponibles();
+    }
+
+    public int obtenerCantidadMejorasRestantes() {
+        return juego.getPersonaje().cantidadDeNiveles();
+    }
+
+    public void mostrarOpcionesMejora() {
+        System.out.println("Mostrando opciones de mejora");
+        if (vistaMapa != null) {
+            int mejorasRestantes = obtenerCantidadMejorasRestantes();
+            vistaMapa.mostrarOpcionesMejora(mejorasRestantes);
+        }
+    }
+    
+    public void aplicarMejora(String opcionMejora) {
+        System.out.println("Aplicando mejora: " + opcionMejora);
+        juego.aplicarMejora(opcionMejora);
+        mostrarVistaMapa(); // Volver al mapa después de aplicar la mejora
     }
 }

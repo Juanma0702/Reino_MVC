@@ -26,8 +26,6 @@ public class VistaMisionesSecundarias extends JPanel {
         this.controlador = controlador;
         this.misiones = definirMisiones();
 
-        System.out.println("Inicializando VistaMisionesSecundarias con " + this.misiones.size() + " misiones.");
-
         // Configuración principal del panel
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen exterior
@@ -67,11 +65,11 @@ public class VistaMisionesSecundarias extends JPanel {
                 // Botón "Reclamar" a la derecha
                 JButton botonReclamar = new JButton("Reclamar");
                 botonReclamar.setFont(new Font("Arial", Font.BOLD, 14));
-                botonReclamar.setEnabled(controlador.esMisionReclamable(datos.get("nombre")));
                 botonReclamar.addActionListener(e -> {
                     controlador.reclamarObjeto(datos.get("nombre"));
                     actualizarVista(); // Actualizar la vista después de reclamar el objeto
                 });
+                botonReclamar.setEnabled(Boolean.parseBoolean(datos.get("reclamable")));
                 panelMision.add(botonReclamar, BorderLayout.EAST);
 
                 panelCentral.add(panelMision);

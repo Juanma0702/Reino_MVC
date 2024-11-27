@@ -48,7 +48,7 @@ public class VistaCombate extends JPanel {
                     JOptionPane.INFORMATION_MESSAGE
                 );
                 if (controlador != null) {
-                    controlador.reiniciarJuego(); // Reiniciar el juego
+                    System.exit(0); // Cierra la aplicación
                 }
             } else {
                 areaCombate.setText(areaCombate.getText() + "<br>¡Has ganado el combate! Felicitaciones.");
@@ -64,7 +64,7 @@ public class VistaCombate extends JPanel {
                     "Juego Completado",
                     JOptionPane.INFORMATION_MESSAGE
                 );
-                ControladorJuego.getInstancia().reiniciarJuego();
+                System.exit(0); // Cierra la aplicación
             }
         });
 

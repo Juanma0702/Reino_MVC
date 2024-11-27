@@ -32,7 +32,7 @@ public class Objeto {
     public void reclamar(Personaje heroe) {
         this.heroe = heroe;
         heroe.objetoEncontrado(this);
-        heroe.aplicarMejora(this);
+        
     }
 
     public String getNombre() {
