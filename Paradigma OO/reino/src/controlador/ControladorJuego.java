@@ -7,13 +7,13 @@ import vista.*;
 
 public class ControladorJuego {
     private static ControladorJuego instancia;
-    private Juego juego;
     private String nombreJugador;
     private String clase;
+    private Misiones misiones;
     private VistaMapa vistaMapa; // Añadir esta línea
 
     private ControladorJuego() {
-        juego = new Juego();
+        Juego.getInstancia();
     }
 
     public static ControladorJuego getInstancia() {
@@ -45,7 +45,7 @@ public class ControladorJuego {
         System.out.println("Seleccionando personaje: " + nombreJugador + ", Clase: " + clase);
         this.nombreJugador = nombreJugador;
         this.clase = clase;
-        juego.seleccionarPersonaje(nombreJugador, clase);
+        Juego.getInstancia().seleccionarPersonaje(nombreJugador, clase);
         mostrarVistaHub();
     }
 
@@ -56,22 +56,22 @@ public class ControladorJuego {
 
     public void mostrarVistaMisiones() {
         System.out.println("Mostrando vista Misiones");
-        cambiarVista(new VistaMisionesSecundarias(this));
+        cambiarVista(new VistaMisionesSecundarias(this, Misiones.getInstancia(null).obtenerVista()));
     }
 
     public void mostrarVistaInventario() {
         System.out.println("Mostrando vista Inventario");
-        List<Objeto> inventario = juego.getInventario();
+        List<Objeto> inventario = Juego.getInstancia().getInventario();
         List<Map<String, String>> datosInventario = new ArrayList<>();
         for (Objeto objeto : inventario) {
             datosInventario.add(objeto.getDatos());
         }
-        cambiarVista(new VistaInventario(this, datosInventario));
+        cambiarVista(new VistaInventario(this, Juego.getInstancia().getPersonaje().obtenerVista()));
     }
 
     public void mostrarVistaEstadoPersonaje() {
         System.out.println("Mostrando vista Estado Personaje");
-        Map<String, String> datosPersonaje = juego.obtenerDatosPersonaje();
+        PersonajeView datosPersonaje = Juego.getInstancia().getPersonaje().obtenerVista();
         cambiarVista(new VistaEstadoPersonaje(this, datosPersonaje));
     }
 
@@ -82,25 +82,25 @@ public class ControladorJuego {
 
     public void actualizarMapaVista() {
         if (vistaMapa != null) {
-            String ubicacionActual = juego.getUbicacionActual();
-            List<String> ubicaciones = juego.getUbicaciones();
-            List<String> caminosDisponibles = juego.getCaminosDisponibles();
+            String ubicacionActual = Juego.getInstancia().getUbicacionActual();
+            List<String> ubicaciones = Juego.getInstancia().getUbicaciones();
+            List<String> caminosDisponibles = Juego.getInstancia().getCaminosDisponibles();
             vistaMapa.actualizar(ubicacionActual, ubicaciones, caminosDisponibles);
         }
     }
 
     public void avanzarUbicacion(String nombreUbicacion) {
         System.out.println("Avanzando a ubicación: " + nombreUbicacion);
-        juego.avanzarUbicacion(nombreUbicacion, this);
+        Juego.getInstancia().avanzarUbicacion(nombreUbicacion, this);
         actualizarMapaVista(); // Asegurarse de actualizar la vista del mapa después de avanzar
     }
 
     public void mostrarVistaMapa() {
         System.out.println("Mostrando vista Mapa");
         if (vistaMapa == null) {
-            String ubicacionActual = juego.getUbicacionActual();
-            List<String> ubicaciones = juego.getUbicaciones();
-            List<String> caminosDisponibles = juego.getCaminosDisponibles();
+            String ubicacionActual = Juego.getInstancia().getUbicacionActual();
+            List<String> ubicaciones = Juego.getInstancia().getUbicaciones();
+            List<String> caminosDisponibles = Juego.getInstancia().getCaminosDisponibles();
             vistaMapa = new VistaMapa(this, ubicacionActual, ubicaciones, caminosDisponibles);
         }
         cambiarVista(vistaMapa);
@@ -120,7 +120,7 @@ public class ControladorJuego {
         System.out.println("Reclamando objeto: " + nombreObjeto);
         Objeto objeto = obtenerObjetoPorNombre(nombreObjeto);
         if (objeto != null && objeto.esReclamable()) {
-            objeto.reclamar(juego.getPersonaje());
+            objeto.reclamar(Juego.getInstancia().getPersonaje());
         } else {
             System.out.println("El objeto no es reclamable o no existe.");
         }
@@ -137,7 +137,7 @@ public class ControladorJuego {
     }
 
     public Objeto obtenerObjetoPorNombre(String nombre) {
-        return juego.getObjetoPorNombre(nombre);
+        return Juego.getInstancia().getObjetoPorNombre(nombre);
     }
 
     public List<Map<String, String>> obtenerDatosMisiones() {
@@ -150,7 +150,7 @@ public class ControladorJuego {
     }
 
     public List<Map<String, String>> obtenerDatosInventario() {
-        List<Objeto> inventario = juego.getInventario();
+        List<Objeto> inventario = Juego.getInstancia().getInventario();
         List<Map<String, String>> datosInventario = new ArrayList<>();
         for (Objeto o : inventario) {
             datosInventario.add(o.getDatos());
@@ -159,11 +159,11 @@ public class ControladorJuego {
     }
 
     public String getUbicacionActual() {
-        return juego.getUbicacionActual();
+        return Juego.getInstancia().getUbicacionActual();
     }
 
     public List<Ubicacion> getUbicacionesActuales() {
-        return juego.getUbicacionesActuales();
+        return Juego.getInstancia().getUbicacionesActuales();
     }
 
     public String obtenerMensajeEventoEspecial(String nombreUbicacion) {
@@ -176,11 +176,11 @@ public class ControladorJuego {
     }
 
     public List<String> getCaminosDisponibles() {
-        return juego.getCaminosDisponibles();
+        return Juego.getInstancia().getCaminosDisponibles();
     }
 
     public int obtenerCantidadMejorasRestantes() {
-        return juego.getPersonaje().cantidadDeNiveles();
+        return Juego.getInstancia().getPersonaje().cantidadDeNiveles();
     }
 
     public void mostrarOpcionesMejora() {
@@ -193,7 +193,7 @@ public class ControladorJuego {
     
     public void aplicarMejora(String opcionMejora) {
         System.out.println("Aplicando mejora: " + opcionMejora);
-        juego.aplicarMejora(opcionMejora);
+        Juego.getInstancia().aplicarMejora(opcionMejora);
         mostrarVistaMapa(); // Volver al mapa después de aplicar la mejora
     }
 }

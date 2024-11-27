@@ -9,6 +9,19 @@ import java.util.Map;
 public class Juego {
     private Personaje personajeActual;
     private Mapa mapa;
+    private static Juego instancia;
+
+    private Juego() {
+        personajeActual = new Mago("");
+        mapa = new Mapa();
+    }
+
+    public static Juego getInstancia() {
+        if (instancia == null) {
+            instancia = new Juego();
+        }
+        return instancia;
+    }
 
     public void seleccionarPersonaje(String nombreJugador, String clase) {
         switch (clase) {

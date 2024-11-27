@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -16,16 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controlador.ControladorJuego;
+import modelo.PersonajeView;
+import modelo.ObjetoView;
 
 public class VistaInventario extends JPanel {
     private ControladorJuego controlador;
-    private List<Map<String, String>> inventario;
+    private PersonajeView inventario;
 
-    public VistaInventario(ControladorJuego controlador, List<Map<String, String>> inventario) {
+    public VistaInventario(ControladorJuego controlador, PersonajeView inventario) {  
         this.controlador = controlador;
-        this.inventario = inventario != null ? inventario : new ArrayList<>(); // Asegúrate de que la lista no sea null
-
-        System.out.println("Inicializando VistaInventario con " + this.inventario.size() + " objetos.");
+        this.inventario = inventario;
 
         // Configuración principal del panel
         setLayout(new BorderLayout());
@@ -41,7 +40,7 @@ public class VistaInventario extends JPanel {
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
         panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
 
-        if (this.inventario.isEmpty()) {
+        if (this.inventario.getObjetos().isEmpty()) {
             // Mostrar mensaje si el inventario está vacío
             JLabel mensajeVacio = new JLabel("No hay objetos en el inventario.", JLabel.CENTER);
             mensajeVacio.setFont(new Font("Arial", Font.PLAIN, 16));
@@ -49,9 +48,9 @@ public class VistaInventario extends JPanel {
             panelCentral.add(mensajeVacio);
         } else {
             // Crear un panel para cada objeto en el inventario
-            for (Map<String, String> datos : inventario) {
+            for (ObjetoView datos : inventario.getObjetos()) {
                 if (datos != null) {
-                    System.out.println("Agregando objeto: " + datos.get("nombre"));
+                    System.out.println("Agregando objeto: " + datos.getNombre());
                     JPanel panelObjeto = new JPanel(new BorderLayout());
                     panelObjeto.setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(Color.GRAY, 1),
@@ -88,16 +87,16 @@ public class VistaInventario extends JPanel {
         add(botonVolverHub, BorderLayout.SOUTH);
     }
 
-    private List<JLabel> obtenerLabels(Map<String, String> datos) {
+    private List<JLabel> obtenerLabels(ObjetoView datos) {
         List<JLabel> aux = new ArrayList<>();
-        JLabel n = new JLabel(datos.get("nombre"), JLabel.CENTER);
-        JLabel v = new JLabel("Se encuentra en: " + datos.get("ubicacion"), JLabel.CENTER);
-        JLabel a = new JLabel("Descripción: " + datos.get("descripcion"), JLabel.CENTER);
+        JLabel n = new JLabel(datos.getNombre(), JLabel.CENTER);
+        JLabel v = new JLabel("Se encuentra en: " + datos.getUbicacion(), JLabel.CENTER);
+        JLabel a = new JLabel("Descripción: " + datos.getDescripcion(), JLabel.CENTER);
         aux.add(n);
         aux.add(v);
         aux.add(a);
-        if (!datos.get("criaturas").equals("0")) {
-            JLabel r = new JLabel("Custodiado por: " + datos.get("criaturas") + " criaturas", JLabel.CENTER);
+        if (datos.getCantidadCriaturas() != 0) {
+            JLabel r = new JLabel("Custodiado por: " + datos.getCantidadCriaturas() + " criaturas", JLabel.CENTER);
             aux.add(r);
         }
         return aux;

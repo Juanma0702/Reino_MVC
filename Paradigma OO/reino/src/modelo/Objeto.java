@@ -21,6 +21,10 @@ public class Objeto {
         this.mejoras = new HashMap<>();
     }
 
+    public ObjetoView obtenerVista() {
+        return new ObjetoView(this.nombre, this.descripcion, this.ubicacion.getNombre(), this.criaturas.size(), this.esReclamable());
+    }
+
     public void encontrado() {
         this.reclamable = true;
     }

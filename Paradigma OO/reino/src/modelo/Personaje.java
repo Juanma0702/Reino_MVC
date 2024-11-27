@@ -75,6 +75,15 @@ public abstract class Personaje {
         }
     }
 
+    public PersonajeView obtenerVista() {
+        List<ObjetoView> inventarioview = new ArrayList<>();
+
+        for (Objeto o : inventario) {
+            inventarioview.add(o.obtenerVista());
+        }
+        return new PersonajeView(nombre, clase, puntosVida, maxVida, nivelAtaque, nivelDefensa, experiencia, inventarioview);
+    }
+
     public void subirNivel(String opcionMejora) {
         experiencia -= 100; // Restar 100 puntos de experiencia por subir de nivel
         switch (opcionMejora) {

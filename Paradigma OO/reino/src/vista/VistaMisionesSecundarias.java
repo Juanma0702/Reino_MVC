@@ -1,6 +1,9 @@
 package vista;
 
 import controlador.ControladorJuego;
+import modelo.MisionesView;
+import modelo.ObjetoView;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,13 +21,11 @@ import javax.swing.JScrollPane;
 
 public class VistaMisionesSecundarias extends JPanel {
     private ControladorJuego controlador;
-    private List<Map<String, String>> misiones;
+    private MisionesView misiones;
 
-    public VistaMisionesSecundarias(ControladorJuego controlador) {
+    public VistaMisionesSecundarias(ControladorJuego controlador, MisionesView misiones) {
         this.controlador = controlador;
-        this.misiones = definirMisiones();
-
-        System.out.println("Inicializando VistaMisionesSecundarias con " + this.misiones.size() + " misiones.");
+        this.misiones = misiones;
 
         // Configuración principal del panel
         setLayout(new BorderLayout());
@@ -41,9 +42,9 @@ public class VistaMisionesSecundarias extends JPanel {
         panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
 
         // Crear un panel para cada misión
-        for (Map<String, String> datos : misiones) {
-            if (datos != null) {
-                System.out.println("Agregando misión: " + datos.get("nombre"));
+        for (ObjetoView objeto : misiones.getObjetos()) {
+            if (objeto != null) {
+                System.out.println("Agregando misión: " + objeto.getNombre());
                 JPanel panelMision = new JPanel(new BorderLayout());
                 panelMision.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(Color.GRAY, 1),
@@ -54,9 +55,9 @@ public class VistaMisionesSecundarias extends JPanel {
                 JPanel panelDescripcion = new JPanel();
                 panelDescripcion.setLayout(new BoxLayout(panelDescripcion, BoxLayout.Y_AXIS));
                 panelDescripcion.setOpaque(false); // Sin color de fondo
-                JLabel nombre = new JLabel(datos.get("nombre"), JLabel.CENTER);
-                JLabel objetivo = new JLabel("Objetivo: " + datos.get("objetivo"), JLabel.CENTER);
-                JLabel recompensa = new JLabel("Recompensa: " + datos.get("recompensa"), JLabel.CENTER);
+                JLabel nombre = new JLabel(objeto.getNombre(), JLabel.CENTER);
+                JLabel objetivo = new JLabel("Objetivo: " + objeto.getDescripcion(), JLabel.CENTER);
+                JLabel recompensa = new JLabel("Recompensa: " + objeto.getNombre(), JLabel.CENTER);
                 panelDescripcion.add(nombre);
                 panelDescripcion.add(objetivo);
                 panelDescripcion.add(recompensa);
@@ -65,10 +66,10 @@ public class VistaMisionesSecundarias extends JPanel {
                 // Botón "Reclamar" a la derecha
                 JButton botonReclamar = new JButton("Reclamar");
                 botonReclamar.setFont(new Font("Arial", Font.BOLD, 14));
-                botonReclamar.setEnabled(controlador.esMisionReclamable(datos.get("nombre")));
+                botonReclamar.setEnabled(controlador.esMisionReclamable(objeto.getNombre()));
                 botonReclamar.addActionListener(e -> {
-                    controlador.reclamarObjeto(datos.get("nombre"));
-                    botonReclamar.setEnabled(controlador.esMisionReclamable(datos.get("nombre")));
+                    controlador.reclamarObjeto(objeto.getNombre());
+                    botonReclamar.setEnabled(controlador.esMisionReclamable(objeto.getNombre()));
                 });
                 panelMision.add(botonReclamar, BorderLayout.EAST);
 
@@ -122,16 +123,5 @@ public class VistaMisionesSecundarias extends JPanel {
         misiones.add(mision4);
 
         return misiones;
-    }
-
-    private void actualizarVista() {
-        removeAll();
-        revalidate();
-        repaint();
-        this.misiones = definirMisiones();
-        // Re-crear la vista con las misiones actualizadas
-        VistaMisionesSecundarias nuevaVista = new VistaMisionesSecundarias(controlador);
-        setLayout(new BorderLayout());
-        add(nuevaVista, BorderLayout.CENTER);
     }
 }

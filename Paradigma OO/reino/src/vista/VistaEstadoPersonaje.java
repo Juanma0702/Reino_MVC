@@ -9,15 +9,16 @@ import java.io.IOException;
 import java.util.*;
 
 import controlador.ControladorJuego;
+import modelo.PersonajeView;
 
 public class VistaEstadoPersonaje extends JPanel {
-    private Map<String, String> datosPersonaje;
+    PersonajeView personajeView;
     private ControladorJuego controlador;
     private BufferedImage backgroundImage; // Añadir esta línea
 
-    public VistaEstadoPersonaje(ControladorJuego controlador, Map<String, String> datosPersonaje) {
+    public VistaEstadoPersonaje(ControladorJuego controlador, PersonajeView personajeView) {
         this.controlador = controlador;
-        this.datosPersonaje = datosPersonaje;
+        this.personajeView = personajeView;
 
         // Cargar la imagen de fondo
         try {
@@ -74,16 +75,32 @@ public class VistaEstadoPersonaje extends JPanel {
         panelTexto.setBackground(new Color(0, 0, 0, 150)); // Fondo negro semitransparente
         panelTexto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
 
-        // Mostrar los datos del personaje
-        if (datosPersonaje != null && !datosPersonaje.isEmpty()) {
-            for (Map.Entry<String, String> entry : datosPersonaje.entrySet()) {
-                JLabel label = new JLabel(entry.getKey() + ": " + entry.getValue(), JLabel.CENTER);
-                label.setFont(new Font("Arial", Font.BOLD, 18)); // Aumentar el tamaño de la fuente
-                label.setForeground(Color.WHITE); // Color del texto blanco
-                panelTexto.add(label);
-            }
-        }
+        // Mostrar los datos del personaje con estilo y letras blancas
+        JLabel n = new JLabel("Nombre: " + personajeView.getNombre(), JLabel.CENTER);
+        n.setFont(new Font("Arial", Font.BOLD, 18));
+        n.setForeground(Color.WHITE);
 
+        JLabel v = new JLabel("Vida: " + personajeView.getPuntosVida(), JLabel.CENTER);
+        v.setFont(new Font("Arial", Font.BOLD, 18));
+        v.setForeground(Color.WHITE);
+
+        JLabel a = new JLabel("Ataque: " + personajeView.getNivelAtaque(), JLabel.CENTER);
+        a.setFont(new Font("Arial", Font.BOLD, 18));
+        a.setForeground(Color.WHITE);
+
+        JLabel d = new JLabel("Defensa: " + personajeView.getNivelDefensa(), JLabel.CENTER);
+        d.setFont(new Font("Arial", Font.BOLD, 18));
+        d.setForeground(Color.WHITE);
+
+        JLabel e = new JLabel("Experiencia: " + personajeView.getExperiencia(), JLabel.CENTER);
+        e.setFont(new Font("Arial", Font.BOLD, 18));
+        e.setForeground(Color.WHITE);
+
+        panelTexto.add(n);
+        panelTexto.add(v);
+        panelTexto.add(a);
+        panelTexto.add(d);
+        panelTexto.add(e);
         panel.add(panelTexto);
         return panel;
     }

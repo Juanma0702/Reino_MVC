@@ -7,11 +7,19 @@ public class Misiones {
     private static Misiones instancia;
     private List<Objeto> objetos = new ArrayList<>();
 
+
     private Misiones(Objeto o) {
         if (o != null) {
             this.objetos.add(o);
         }
     }
+
+    public MisionesView obtenerVista() {
+        for (Objeto o : objetos) {
+            MisionesView.getInstance().agregarObjeto(o.obtenerVista());
+        }
+        return MisionesView.getInstance();
+    }    
 
     public static Misiones getInstancia(Objeto o) {
         if (instancia == null) {
