@@ -1,7 +1,11 @@
 package vista;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.*;
 
@@ -15,6 +19,7 @@ public class VistaMapa extends JPanel {
     private String ubicacionActual;
     private List<String> ubicaciones;
     private List<String> caminosDisponibles;
+    private BufferedImage backgroundImage; // Añadir esta línea
 
     // Constructor
     public VistaMapa(ControladorJuego controlador, String ubicacionActual, List<String> ubicaciones,
@@ -25,20 +30,27 @@ public class VistaMapa extends JPanel {
         this.caminosDisponibles = caminosDisponibles;
         this.botonesUbicaciones = new HashMap<>();
 
+        // Cargar la imagen de fondo
+        try {
+            backgroundImage = ImageIO.read(new File("Paradigma OO\\reino\\src\\resources\\vistamapa.png")); // Cambia la ruta a tu imagen
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         // Configuración del panel principal
         setLayout(new BorderLayout());
         setBackground(new Color(255, 255, 255)); // Fondo blanco claro
 
         // Título que muestra la ubicación actual
         titulo = new JLabel("Mapa del Reino de Uadengard", JLabel.CENTER);
-        titulo.setFont(new Font("Serif", Font.BOLD, 24));
-        titulo.setForeground(new Color(0, 102, 204)); // Color azul claro
+        titulo.setFont(new Font("Serif", Font.BOLD, 30));
+        titulo.setForeground(Color.WHITE); // Color azul claro
         add(titulo, BorderLayout.NORTH);
 
         // Panel para mostrar el mapa en una cuadrícula
         panelMapa = new JPanel();
         panelMapa.setLayout(new GridLayout(20, 3, 10, 10)); // Estructura de 20 filas por 3 columnas
-        panelMapa.setBackground(new Color(240, 240, 240)); // Fondo gris claro
+        panelMapa.setOpaque(false); // Hacer el panel transparente
         panelMapa.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
         add(panelMapa, BorderLayout.CENTER);
 
@@ -60,6 +72,14 @@ public class VistaMapa extends JPanel {
         botonVolverHub.setCursor(new Cursor(Cursor.HAND_CURSOR));
         botonVolverHub.addActionListener(e -> controlador.mostrarVistaHub());
         add(botonVolverHub, BorderLayout.SOUTH);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (backgroundImage != null) {
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
     private void inicializarBotonesUbicaciones() {
