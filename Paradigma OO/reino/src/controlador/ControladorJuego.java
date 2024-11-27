@@ -1,16 +1,16 @@
 package controlador;
 
-import vista.*;
-import modelo.*;
 import java.util.*;
 import javax.swing.*;
+import modelo.*;
+import vista.*;
 
 public class ControladorJuego {
     private static ControladorJuego instancia;
     private Juego juego;
     private String nombreJugador;
     private String clase;
-    private VistaMapa vistaMapa;
+    private VistaMapa vistaMapa; // Añadir esta línea
 
     private ControladorJuego() {
         juego = new Juego();
@@ -121,15 +121,19 @@ public class ControladorJuego {
         Objeto objeto = obtenerObjetoPorNombre(nombreObjeto);
         if (objeto != null && objeto.esReclamable()) {
             objeto.reclamar(juego.getPersonaje());
-            mostrarVistaInventario(); // Actualizar la vista del inventario después de reclamar el objeto
         } else {
             System.out.println("El objeto no es reclamable o no existe.");
         }
     }
 
     public boolean esMisionReclamable(String nombreMision) {
-        return Misiones.getInstancia(null).getObjetos().stream()
-            .anyMatch(m -> m.getNombre().equals(nombreMision) && m.esReclamable());
+        List<Objeto> objetos = Misiones.getInstancia(null).getObjetos();
+        for (Objeto objeto : objetos) {
+            if(objeto.esReclamable() && objeto.getNombre().equals(nombreMision)){
+                return objeto.esReclamable();
+            }
+        }
+        return false;
     }
 
     public Objeto obtenerObjetoPorNombre(String nombre) {

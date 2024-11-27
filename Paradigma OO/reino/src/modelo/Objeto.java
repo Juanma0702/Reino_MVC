@@ -10,7 +10,7 @@ public class Objeto {
     private Ubicacion ubicacion;
     private Personaje heroe;
     private List<Criatura> criaturas;
-    private boolean reclamable;
+    private boolean reclamable = false;
     private Map<String, Integer> mejoras;
 
     public Objeto(String nombre, String descripcion, Ubicacion ubicacion, List<Criatura> criaturas) {
@@ -32,31 +32,11 @@ public class Objeto {
     public void reclamar(Personaje heroe) {
         this.heroe = heroe;
         heroe.objetoEncontrado(this);
-        
+        heroe.aplicarMejora(this);
     }
 
     public String getNombre() {
         return nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
-
-    public List<Criatura> getCriaturas() {
-        return criaturas;
-    }
-
-    public Map<String, Integer> getMejoras() {
-        return mejoras;
-    }
-
-    public void agregarMejora(String tipo, int valor) {
-        mejoras.put(tipo, valor);
     }
 
     public Map<String, String> getDatos() {

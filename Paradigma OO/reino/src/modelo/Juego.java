@@ -1,12 +1,10 @@
 package modelo;
 
+import controlador.ControladorJuego;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-
-import controlador.ControladorJuego;
 
 public class Juego {
     private Personaje personajeActual;
@@ -76,9 +74,8 @@ public class Juego {
             for (Ubicacion ubicacion : mapa.getUbicaciones()) {
                 if (ubicacion.getNombre().equals(nombreUbicacion)) {
                     mapa.avanzar(ubicacion);
-                    ubicacion.marcarMisionesReclamables(); // Marcar misiones como reclamables
-                    if (!ubicacion.esNeutral() && !ubicacion.isCombateRealizado()) {
-                        ubicacion.setCombateRealizado(true);
+                    if (!ubicacion.esNeutral()) {
+                        ubicacion.CombateRealizado();
                         Combate combate = new Combate(personajeActual, ubicacion.getCriaturas(), true);
                         String resultadoCombate = combate.iniciarCombate(personajeActual.nombre);
                         boolean victoria = combate.getVictoria();
@@ -87,7 +84,7 @@ public class Juego {
                     } else if (ubicacion.esNeutral()) {
                         personajeActual.restaurarVida(); // Restaurar vida en ubicaciones neutrales.
                         for (int i = personajeActual.cantidadDeNiveles(); i > 0; i--) {
-                            controlador.mostrarOpcionesMejora(); // Mostrar opciones de mejora
+                            controlador.mostrarOpcionesMejora();
                         }
                     }
                     controlador.actualizarMapaVista();
@@ -115,7 +112,7 @@ public class Juego {
     }
 
     public Objeto getObjetoPorNombre(String nombre) {
-        for (Objeto objeto : personajeActual.getInventario()) {
+        for (Objeto objeto : Misiones.getInstancia(null).getObjetos()) {
             if (objeto.getNombre().equals(nombre)) {
                 return objeto;
             }

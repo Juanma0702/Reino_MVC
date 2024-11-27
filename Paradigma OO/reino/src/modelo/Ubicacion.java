@@ -9,7 +9,7 @@ public class Ubicacion {
     private boolean esNeutral;
     private List<Ubicacion> caminosPosibles;
     private String mensajeEventoEspecial;
-    private boolean combateRealizado = false; // Variable para controlar si el combate ya se realizó.
+    private Objeto objeto;
 
     public Ubicacion(String nombre, boolean esNeutral) {
         this.nombre = nombre;
@@ -57,6 +57,8 @@ public class Ubicacion {
             this.esNeutral = false;
         } else if (nombre.contains("Montaña Helada")) {
             Criatura dragon = new Dragon();
+            this.objeto = new Objeto("Espada de fuego", "Aumenta el nivel de ataque del heroe en 20%", this, criaturas);
+            Misiones.getInstancia(objeto);
             this.criaturas.add(dragon);
             this.esNeutral = false;
             this.mensajeEventoEspecial = "¡Has matado al dragon del norte!  \nYa puedes reclamar la Espada de fuego";
@@ -65,6 +67,8 @@ public class Ubicacion {
                 Criatura espectro = new Espectro();
                 this.criaturas.add(espectro);
             }
+            this.objeto = new Objeto("Arco de luz", "Aumenta el nivel de ataque del heroe en 25%", this, criaturas);
+            Misiones.getInstancia(objeto);
             this.esNeutral = false;
             this.mensajeEventoEspecial = "¡Has vencido a los espectros del pantano!  \nYa puedes reclamar el Arco de Luz";
         } else if (nombre.contains("Aldea de los Sirith")) {
@@ -72,10 +76,14 @@ public class Ubicacion {
                 Criatura troll = new Troll();
                 this.criaturas.add(troll);
             }
+            this.objeto = new Objeto("Escudo de titanio", "Aumenta la defensa en 30 puntos", this, criaturas);
+            Misiones.getInstancia(objeto);
             this.esNeutral = false;
             this.mensajeEventoEspecial = "¡Has limpiado la aldea de trolls!  \nYa puedes reclamar el Escudo de titanio";
         } else if (nombre.contains("Bosque de los Susurros")) {
             Criatura espectro = new Espectro();
+            this.objeto = new Objeto("Amuleto de proteccion", "Aumenta el nivel de defensa del heroe en 15%", this, criaturas);
+            Misiones.getInstancia(objeto);
             this.criaturas.add(espectro);
             this.esNeutral = false; // Neutral porque solo hay un evento
             this.mensajeEventoEspecial = "¡Has encontrado el amuleto perdido! \nDecides quedartelo, reclamalo para equiparlo";
@@ -106,31 +114,9 @@ public class Ubicacion {
         return mensajeEventoEspecial;
     }
 
-    public boolean isCombateRealizado() {
-        return combateRealizado;
-    }
-
-    public void setCombateRealizado(boolean combateRealizado) {
-        this.combateRealizado = combateRealizado;
-    }
-
-    public void marcarMisionesReclamables() {
-        if (nombre.contains("Montaña Helada")) {
-            Misiones.getInstancia(null).getObjetos().stream()
-                .filter(m -> m.getNombre().equals("Derrota al Dragón del Norte"))
-                .forEach(m -> m.encontrado());
-        } else if (nombre.contains("Pantano Oscuro")) {
-            Misiones.getInstancia(null).getObjetos().stream()
-                .filter(m -> m.getNombre().equals("Elimina a los Espectros del Pantano"))
-                .forEach(m -> m.encontrado());
-        } else if (nombre.contains("Aldea de los Sirith")) {
-            Misiones.getInstancia(null).getObjetos().stream()
-                .filter(m -> m.getNombre().equals("Limpia la Aldea de los Trolls"))
-                .forEach(m -> m.encontrado());
-        } else if (nombre.contains("Bosque de los Susurros")) {
-            Misiones.getInstancia(null).getObjetos().stream()
-                .filter(m -> m.getNombre().equals("Recupera el Amuleto Perdido"))
-                .forEach(m -> m.encontrado());
+    public void CombateRealizado() {
+        if (this.objeto != null){
+            this.objeto.encontrado();
         }
     }
 }

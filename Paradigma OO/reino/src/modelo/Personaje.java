@@ -18,7 +18,7 @@ public abstract class Personaje {
         this.maxVida = maxVida;
         this.nivelAtaque = nivelAtaque;
         this.nivelDefensa = nivelDefensa;
-        this.experiencia = 0;  // Inicializamos la experiencia en 0
+        this.experiencia = 0; // Inicializamos la experiencia en 0
         this.clase = clase;
     }
 
@@ -59,6 +59,22 @@ public abstract class Personaje {
         return inventario;
     }
 
+    public void aplicarMejora(Objeto o) {
+        if (o.getNombre().equals("Espada de fuego")) {
+            // Incrementar el ataque del héroe en 20%
+            nivelAtaque = (int) (nivelAtaque * 1.2);
+        } else if (o.getNombre().equals("Amuleto de proteccion")) {
+            // Incrementar la defensa del héroe en 15%
+            nivelDefensa = (int) (nivelDefensa * 1.15);
+        } else if (o.getNombre().equals("Arco de luz")) {
+            // Incrementar el ataque del héroe en 25%
+            nivelAtaque = (int) (nivelAtaque * 1.25);
+        } else if (o.getNombre().equals("Escudo de titanio")) {
+            // Incrementar la defensa en 30 puntos
+            nivelDefensa += 30;
+        }
+    }
+
     public void subirNivel(String opcionMejora) {
         experiencia -= 100; // Restar 100 puntos de experiencia por subir de nivel
         switch (opcionMejora) {
@@ -79,5 +95,6 @@ public abstract class Personaje {
 
     // Métodos abstractos para el sistema de combate
     public abstract int recibirDanio(int danio, Criatura c);
+
     public abstract int hacerDanio(Criatura c);
-}    
+}

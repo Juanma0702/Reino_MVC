@@ -1,13 +1,13 @@
 package vista;
 
+import controlador.ControladorJuego;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
+import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -16,8 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import controlador.ControladorJuego;
-
 public class VistaMisionesSecundarias extends JPanel {
     private ControladorJuego controlador;
     private List<Map<String, String>> misiones;
@@ -25,6 +23,8 @@ public class VistaMisionesSecundarias extends JPanel {
     public VistaMisionesSecundarias(ControladorJuego controlador) {
         this.controlador = controlador;
         this.misiones = definirMisiones();
+
+        System.out.println("Inicializando VistaMisionesSecundarias con " + this.misiones.size() + " misiones.");
 
         // Configuración principal del panel
         setLayout(new BorderLayout());
@@ -65,11 +65,11 @@ public class VistaMisionesSecundarias extends JPanel {
                 // Botón "Reclamar" a la derecha
                 JButton botonReclamar = new JButton("Reclamar");
                 botonReclamar.setFont(new Font("Arial", Font.BOLD, 14));
+                botonReclamar.setEnabled(controlador.esMisionReclamable(datos.get("nombre")));
                 botonReclamar.addActionListener(e -> {
                     controlador.reclamarObjeto(datos.get("nombre"));
-                    actualizarVista(); // Actualizar la vista después de reclamar el objeto
+                    botonReclamar.setEnabled(controlador.esMisionReclamable(datos.get("nombre")));
                 });
-                botonReclamar.setEnabled(Boolean.parseBoolean(datos.get("reclamable")));
                 panelMision.add(botonReclamar, BorderLayout.EAST);
 
                 panelCentral.add(panelMision);
@@ -94,28 +94,28 @@ public class VistaMisionesSecundarias extends JPanel {
         List<Map<String, String>> misiones = new ArrayList<>();
 
         Map<String, String> mision1 = new HashMap<>();
-        mision1.put("nombre", "Derrota al Dragón del Norte");
+        mision1.put("nombre", "Espada de fuego");
         mision1.put("objetivo", "Vencer al Dragón del Norte que habita en las Montañas Heladas.");
         mision1.put("recompensa", "Espada de Fuego (aumenta el nivel de ataque del Héroe en 20%).");
         mision1.put("reclamable", String.valueOf(controlador.esMisionReclamable("Derrota al Dragón del Norte")));
         misiones.add(mision1);
 
         Map<String, String> mision2 = new HashMap<>();
-        mision2.put("nombre", "Recupera el Amuleto Perdido");
+        mision2.put("nombre", "Amuleto de proteccion");
         mision2.put("objetivo", "Encontrar y recuperar el Amuleto Perdido en el Bosque de los Susurros.");
         mision2.put("recompensa", "Amuleto de Protección (aumenta la defensa del Héroe en 15%).");
         mision2.put("reclamable", String.valueOf(controlador.esMisionReclamable("Recupera el Amuleto Perdido")));
         misiones.add(mision2);
 
         Map<String, String> mision3 = new HashMap<>();
-        mision3.put("nombre", "Elimina a los Espectros del Pantano");
+        mision3.put("nombre", "Arco de luz");
         mision3.put("objetivo", "Derrotar a 5 Espectros que infestan el Pantano Oscuro.");
         mision3.put("recompensa", "Arco de Luz (aumenta el nivel de ataque del Héroe en 25%).");
         mision3.put("reclamable", String.valueOf(controlador.esMisionReclamable("Elimina a los Espectros del Pantano")));
         misiones.add(mision3);
 
         Map<String, String> mision4 = new HashMap<>();
-        mision4.put("nombre", "Limpia la Aldea de los Trolls");
+        mision4.put("nombre", "Escudo de titanio");
         mision4.put("objetivo", "Derrotar a 3 Trolls en la Aldea de los Sirith.");
         mision4.put("recompensa", "Escudo de Titanio (aumenta la defensa del Guerrero en 30 puntos).");
         mision4.put("reclamable", String.valueOf(controlador.esMisionReclamable("Limpia la Aldea de los Trolls")));
