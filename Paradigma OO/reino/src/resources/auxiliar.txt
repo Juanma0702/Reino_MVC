@@ -1,0 +1,77 @@
+vistamapa(leer)
+
+import java.util.*;
+import javax.swing.*;
+
+import modelo.Juego;
+import modelo.Misiones;
+import modelo.Objeto;
+import vista.VistaHub;
+import vista.VistaMisionesSecundarias;
+import vista.VistaInventario;
+import vista.VistaMapa;
+
+public class ControladorJuego {
+    private static ControladorJuego instancia;
+    private Juego juego;
+    private String nombreJugador;
+    private String clase;
+
+    private ControladorJuego() {
+        juego = new Juego();
+    }
+
+    public static ControladorJuego getInstancia() {
+        if (instancia == null) {
+            instancia = new ControladorJuego();
+        }
+        return instancia;
+    }
+
+    public void iniciarJuego() {
+        // Instancia la vista principal
+        VistaPrincipal.getInstancia().setVisible(true);
+        mostrarVistaNombre();
+    }
+
+    public void cambiarVista(JPanel nuevaVista) {
+        VistaPrincipal.getInstancia().setVista(nuevaVista);
+    }
+
+    public void seleccionarPersonaje(String nombreJugador, String clase) {
+        this.nombreJugador = nombreJugador;
+        this.clase = clase;
+        juego.seleccionarPersonaje(nombreJugador, clase);
+        mostrarVistaHub();
+    }
+
+    public void mostrarVistaHub() {
+        cambiarVista(new VistaHub(this, nombreJugador, clase));
+    }
+
+    public void mostrarVistaMisiones() {
+        List<Objeto> misiones = Misiones.getInstancia(null).getObjetos();
+        cambiarVista(new VistaMisionesSecundarias(this, misiones));
+    }
+
+    public void mostrarVistaInventario() {
+        List<Objeto> inventario = juego.getInventario();
+        cambiarVista(new VistaInventario(this, inventario));
+    }
+
+    public void mostrarVistaMapa() {
+        cambiarVista(new VistaMapa(this, juego.getUbicacionActual(), juego.getUbicaciones(), juego.getCaminosDisponibles()));
+    }
+
+    public void avanzarUbicacion(String nombreUbicacion) {
+        juego.avanzarUbicacion(nombreUbicacion, this);
+    }
+
+    public void reclamarObjeto(Objeto objeto) {
+        objeto.Reclamado(juego.getPersonaje());
+    }
+
+    public void actualizarMapaVista() {
+        // Implementa la lógica para actualizar la vista del mapa
+    }
+}

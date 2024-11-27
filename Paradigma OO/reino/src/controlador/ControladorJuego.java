@@ -39,13 +39,35 @@ public class ControladorJuego {
         mostrarVistaHub();
     }
 
+    public void mostrarVistaHub() {
+        cambiarVista(new VistaHub(this, nombreJugador, clase));
+    }
+
+    public void mostrarVistaMisiones() {
+        List<Objeto> misiones = Misiones.getInstancia(null).getObjetos();
+        List<Map<String, String>> datosMisiones = new ArrayList<>();
+        for (Objeto mision : misiones) {
+            if (mision != null) {
+                datosMisiones.add(mision.getDatos());
+            }
+        }
+        cambiarVista(new VistaMisionesSecundarias(this, datosMisiones));
+    }
+
+    public void mostrarVistaInventario() {
+        List<Objeto> inventario = juego.getInventario();
+        List<Map<String, String>> datosInventario = new ArrayList<>();
+        for (Objeto objeto : inventario) {
+            if (objeto != null) {
+                datosInventario.add(objeto.getDatos());
+            }
+        }
+        cambiarVista(new VistaInventario(this, datosInventario));
+    }
+
     public void mostrarVistaEstadoPersonaje() {
         Map<String, String> datosPersonaje = juego.obtenerDatosPersonaje();
         cambiarVista(new VistaEstadoPersonaje(this, datosPersonaje));
-    }
-
-    public void mostrarVistaHub() {
-        cambiarVista(new VistaHub(this, nombreJugador, clase));
     }
 
     public void mostrarVistaNombre() {
@@ -76,6 +98,46 @@ public class ControladorJuego {
 
     public void reiniciarJuego() {
         // Lógica para reiniciar el juego
+    }
+
+    public void reclamarObjeto(String nombreObjeto) {
+        Objeto objeto = obtenerObjetoPorNombre(nombreObjeto);
+        if (objeto != null) {
+            objeto.reclamar(juego.getPersonaje());
+        }
+    }
+
+    public Objeto obtenerObjetoPorNombre(String nombre) {
+        return juego.getObjetoPorNombre(nombre);
+    }
+
+    public List<Map<String, String>> obtenerDatosMisiones() {
+        List<Objeto> misiones = Misiones.getInstancia(null).getObjetos();
+        List<Map<String, String>> datosMisiones = new ArrayList<>();
+        for (Objeto o : misiones) {
+            Map<String, String> datos = new HashMap<>();
+            datos.put("nombre", o.getNombre());
+            datos.put("descripcion", o.getDescripcion());
+            datos.put("ubicacion", o.getUbicacion().getNombre());
+            datos.put("criaturas", String.valueOf(o.getCriaturas().size()));
+            datos.put("reclamable", String.valueOf(o.esReclamable()));
+            datosMisiones.add(datos);
+        }
+        return datosMisiones;
+    }
+
+    public List<Map<String, String>> obtenerDatosInventario() {
+        List<Objeto> inventario = juego.getInventario();
+        List<Map<String, String>> datosInventario = new ArrayList<>();
+        for (Objeto o : inventario) {
+            Map<String, String> datos = new HashMap<>();
+            datos.put("nombre", o.getNombre());
+            datos.put("descripcion", o.getDescripcion());
+            datos.put("ubicacion", o.getUbicacion().getNombre());
+            datos.put("criaturas", String.valueOf(o.getCriaturas().size()));
+            datosInventario.add(datos);
+        }
+        return datosInventario;
     }
 
     public String getUbicacionActual() {

@@ -90,11 +90,29 @@ public class Juego {
         }
     }
 
+    public Personaje getPersonaje() {
+        return personajeActual;
+    }
+
     public List<Ubicacion> getUbicacionesActuales() {
         return mapa.getUbicaciones();
     }
 
     public void actualizarMapaVista(ControladorJuego controlador) {
         controlador.actualizarMapaVista();
+    }
+
+    public List<Objeto> getInventario() {
+        // Retorna el inventario del personaje actual
+        return personajeActual.getInventario();
+    }
+
+    public Objeto getObjetoPorNombre(String nombre) {
+        for (Objeto objeto : personajeActual.getInventario()) {
+            if (objeto.getNombre().equals(nombre)) {
+                return objeto;
+            }
+        }
+        return null;
     }
 }

@@ -72,11 +72,10 @@ public class VistaHub extends JPanel {
         gbc.weighty = 1.0;
 
         // Crear y configurar botones
-        JButton botonMapa = crearBoton("Mapa",
-                "C:\\Users\\MSI\\Desktop\\REINO_MVC\\Reino_MVC\\Paradigma OO\\reino\\src\\resources\\Mapa.png");
-        JButton botonMisiones = crearBoton("Misiones", "C:/re/inventario.jpeg");
-        JButton botonEstadoPersonaje = crearBoton("Estado Personaje", "C:/re/misiones.jpeg");
-        JButton botonInventario = crearBoton("Inventario", "C:/re/salir.jpeg");
+        JButton botonMapa = crearBoton("Mapa","Paradigma OO\\reino\\src\\resources\\mapa.png");
+        JButton botonMisiones = crearBoton("Misiones", "Paradigma OO\\reino\\src\\resources\\misiones.png");
+        JButton botonEstadoPersonaje = crearBoton("Estado Personaje", "Paradigma OO\\reino\\src\\resources\\estado.png");
+        JButton botonInventario = crearBoton("Inventario", "Paradigma OO\\reino\\src\\resources\\inventario.png");
 
         // Añadir botones al panel con GridBagConstraints
         gbc.gridx = 0;
@@ -111,9 +110,9 @@ public class VistaHub extends JPanel {
         // Acciones de los botones
         botonCerrar.addActionListener(e -> System.exit(0)); // Cierra la aplicación
         botonMapa.addActionListener(e -> controlador.mostrarVistaMapa());
-        // botonMisiones.addActionListener(e -> controlador.mostrarVistaMisiones());
+        botonMisiones.addActionListener(e -> controlador.mostrarVistaMisiones());
         botonEstadoPersonaje.addActionListener(e -> controlador.mostrarVistaEstadoPersonaje());
-        // botonInventario.addActionListener(e -> controlador.mostrarVistaInventario());
+        botonInventario.addActionListener(e -> controlador.mostrarVistaInventario());
     }
 
     private JButton crearBoton(String texto, String iconoPath) {
@@ -123,9 +122,9 @@ public class VistaHub extends JPanel {
         boton.setForeground(Color.BLACK);
         boton.setFocusPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setPreferredSize(new Dimension(730, 370)); // Tamaño del botón
-        boton.setMinimumSize(new Dimension(730, 370)); // Tamaño mínimo del botón
-        boton.setMaximumSize(new Dimension(730, 370)); // Tamaño máximo del botón
+        boton.setPreferredSize(new Dimension(640, 315)); // Tamaño del botón
+        boton.setMinimumSize(new Dimension(640, 315)); // Tamaño mínimo del botón
+        boton.setMaximumSize(new Dimension(640, 315)); // Tamaño máximo del botón
 
         if (!iconoPath.isEmpty()) {
             File archivo = new File(iconoPath);

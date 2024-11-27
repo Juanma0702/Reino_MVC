@@ -10,6 +10,7 @@ public abstract class Personaje {
     protected int nivelAtaque;
     protected int nivelDefensa;
     protected int experiencia;
+    private List<Objeto> inventario = new ArrayList<>();
 
     public Personaje(String nombre, int puntosVida, int maxVida, int nivelAtaque, int nivelDefensa, String clase) {
         this.nombre = nombre;
@@ -33,6 +34,10 @@ public abstract class Personaje {
         return datos;
     }
 
+    public void objetoEncontrado(Objeto objeto) {
+        inventario.add(objeto);
+    }
+
     public void ganarExperiencia(int experiencia) {
         this.experiencia += experiencia;
     }
@@ -48,6 +53,15 @@ public abstract class Personaje {
     public int cantidadDeNiveles() {
         // Implementar la lógica para calcular la cantidad de niveles
         return experiencia / 100; // Ejemplo: 1 nivel por cada 100 puntos de experiencia
+    }
+
+    public List<Objeto> getInventario() {
+        return inventario;
+    }
+
+
+    public void aplicarMejora(Objeto objeto) {
+        // implementation of aplicarMejora
     }
 
     public void subirNivel() {
