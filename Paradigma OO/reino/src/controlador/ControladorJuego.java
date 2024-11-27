@@ -10,6 +10,7 @@ public class ControladorJuego {
     private Juego juego;
     private String nombreJugador;
     private String clase;
+    private VistaMapa vistaMapa; // Añadir esta línea
 
     private ControladorJuego() {
         juego = new Juego();
@@ -30,7 +31,14 @@ public class ControladorJuego {
 
     public void cambiarVista(JPanel nuevaVista) {
         System.out.println("Cambiando vista a: " + nuevaVista.getClass().getSimpleName());
-        VistaPrincipal.getInstancia().setVista(nuevaVista);
+        VistaPrincipal vistaPrincipal = VistaPrincipal.getInstancia();
+        if (vistaPrincipal.getVistaActual() instanceof VistaMapa) {
+            vistaPrincipal.getVistaActual().setVisible(false); // Ocultar la vista del mapa
+        } else if (vistaPrincipal.getVistaActual() != null) {
+            vistaPrincipal.remove(vistaPrincipal.getVistaActual());
+        }
+        vistaPrincipal.setVista(nuevaVista);
+        nuevaVista.setVisible(true); // Asegurarse de que la nueva vista sea visible
     }
 
     public void seleccionarPersonaje(String nombreJugador, String clase) {
@@ -73,8 +81,11 @@ public class ControladorJuego {
     }
 
     public void actualizarMapaVista() {
-        if (VistaPrincipal.getInstancia().getVistaActual() instanceof VistaMapa) {
-            ((VistaMapa) VistaPrincipal.getInstancia().getVistaActual()).actualizarVisibilidadUbicaciones();
+        if (vistaMapa != null) {
+            String ubicacionActual = juego.getUbicacionActual();
+            List<String> ubicaciones = juego.getUbicaciones();
+            List<String> caminosDisponibles = juego.getCaminosDisponibles();
+            vistaMapa.actualizar(ubicacionActual, ubicaciones, caminosDisponibles);
         }
     }
 
@@ -86,10 +97,13 @@ public class ControladorJuego {
 
     public void mostrarVistaMapa() {
         System.out.println("Mostrando vista Mapa");
-        String ubicacionActual = juego.getUbicacionActual();
-        List<String> ubicaciones = juego.getUbicaciones();
-        List<String> caminosDisponibles = juego.getCaminosDisponibles();
-        cambiarVista(new VistaMapa(this, ubicacionActual, ubicaciones, caminosDisponibles));
+        if (vistaMapa == null) {
+            String ubicacionActual = juego.getUbicacionActual();
+            List<String> ubicaciones = juego.getUbicaciones();
+            List<String> caminosDisponibles = juego.getCaminosDisponibles();
+            vistaMapa = new VistaMapa(this, ubicacionActual, ubicaciones, caminosDisponibles);
+        }
+        cambiarVista(vistaMapa);
     }
 
     public void mostrarVistaCombate(String resultadoCombate, boolean victoria, boolean combateFinal) {
