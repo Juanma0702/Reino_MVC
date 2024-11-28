@@ -10,7 +10,7 @@ public class ControladorJuego {
     private String nombreJugador;
     private String clase;
     private Misiones misiones;
-    private VistaMapa vistaMapa; // Añadir esta línea
+    private VistaMapa vistaMapa;
 
     private ControladorJuego() {
         Juego.getInstancia();
@@ -33,12 +33,12 @@ public class ControladorJuego {
         System.out.println("Cambiando vista a: " + nuevaVista.getClass().getSimpleName());
         VistaPrincipal vistaPrincipal = VistaPrincipal.getInstancia();
         if (vistaPrincipal.getVistaActual() instanceof VistaMapa) {
-            vistaPrincipal.getVistaActual().setVisible(false); // Ocultar la vista del mapa
+            vistaPrincipal.getVistaActual().setVisible(false);
         } else if (vistaPrincipal.getVistaActual() != null) {
             vistaPrincipal.remove(vistaPrincipal.getVistaActual());
         }
         vistaPrincipal.setVista(nuevaVista);
-        nuevaVista.setVisible(true); // Asegurarse de que la nueva vista sea visible
+        nuevaVista.setVisible(true); 
     }
 
     public void seleccionarPersonaje(String nombreJugador, String clase) {
@@ -92,7 +92,7 @@ public class ControladorJuego {
     public void avanzarUbicacion(String nombreUbicacion) {
         System.out.println("Avanzando a ubicación: " + nombreUbicacion);
         Juego.getInstancia().avanzarUbicacion(nombreUbicacion, this);
-        actualizarMapaVista(); // Asegurarse de actualizar la vista del mapa después de avanzar
+        actualizarMapaVista();
     }
 
     public void mostrarVistaMapa() {
@@ -112,8 +112,7 @@ public class ControladorJuego {
     }
 
     public void reiniciarJuego() {
-        System.out.println("Reiniciando juego...");
-        // Lógica para reiniciar el juego
+        //System.out.println("Reiniciando juego...");
     }
 
     public void reclamarObjeto(String nombreObjeto) {

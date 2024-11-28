@@ -3,7 +3,7 @@ package modelo;
 public class Troll extends Criatura {
 
     public Troll() {
-        super(150, 40, 35, 30);  // Valores iniciales de vida, ataque, defensa y recompensa de experiencia
+        super(150, 40, 35, 30);
     }
 
     @Override

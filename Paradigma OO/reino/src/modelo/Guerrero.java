@@ -4,7 +4,7 @@ public class Guerrero extends Personaje {
     private int contadorGolpes;
 
     public Guerrero(String nombre) {
-        super(nombre, 1200 , 1200, 50,35, "Guerrero");  // Valores de vida, ataque y defensa iniciales para Guerrero
+        super(nombre, 1200 , 1200, 50,35, "Guerrero"); 
     }
 
     @Override

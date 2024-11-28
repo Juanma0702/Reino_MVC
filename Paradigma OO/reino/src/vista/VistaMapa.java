@@ -19,7 +19,7 @@ public class VistaMapa extends JPanel {
     private String ubicacionActual;
     private List<String> ubicaciones;
     private List<String> caminosDisponibles;
-    private BufferedImage backgroundImage; // Añadir esta línea
+    private BufferedImage backgroundImage;
     private JLabel mejorasRestantesLabel;
 
     // Constructor
@@ -33,26 +33,26 @@ public class VistaMapa extends JPanel {
 
         // Cargar la imagen de fondo
         try {
-            backgroundImage = ImageIO.read(new File("Paradigma OO\\reino\\src\\resources\\vistamapa.png")); // Cambia la ruta a tu imagen
+            backgroundImage = ImageIO.read(new File("Paradigma OO\\reino\\src\\resources\\vistamapa.png")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Configuración del panel principal
         setLayout(new BorderLayout());
-        setBackground(new Color(255, 255, 255)); // Fondo blanco claro
+        setBackground(new Color(255, 255, 255)); 
 
         // Título que muestra la ubicación actual
         titulo = new JLabel("Mapa del Reino de Uadengard", JLabel.CENTER);
         titulo.setFont(new Font("Serif", Font.BOLD, 30));
-        titulo.setForeground(Color.WHITE); // Color azul claro
+        titulo.setForeground(Color.WHITE);
         add(titulo, BorderLayout.NORTH);
 
         // Panel para mostrar el mapa en una cuadrícula
         panelMapa = new JPanel();
-        panelMapa.setLayout(new GridLayout(20, 3, 10, 10)); // Estructura de 20 filas por 3 columnas
-        panelMapa.setOpaque(false); // Hacer el panel transparente
-        panelMapa.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
+        panelMapa.setLayout(new GridLayout(20, 3, 10, 10)); 
+        panelMapa.setOpaque(false); 
+        panelMapa.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
         add(panelMapa, BorderLayout.CENTER);
 
         // Crear los botones y añadirlos en la disposición deseada
@@ -61,13 +61,13 @@ public class VistaMapa extends JPanel {
         // Habilitar manualmente el primer botón después de la inicialización
         JButton primerBoton = botonesUbicaciones.get(ubicacionActual);
         if (primerBoton != null) {
-            primerBoton.setEnabled(true); // Habilitar el primer botón
+            primerBoton.setEnabled(true);
         }
 
         // Botón para volver al Hub
         JButton botonVolverHub = new JButton("Volver al Hub");
         botonVolverHub.setFont(new Font("Arial", Font.PLAIN, 16));
-        botonVolverHub.setBackground(new Color(102, 204, 102)); // Fondo verde claro
+        botonVolverHub.setBackground(new Color(102, 204, 102));
         botonVolverHub.setForeground(Color.WHITE);
         botonVolverHub.setFocusPainted(false);
         botonVolverHub.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -117,7 +117,6 @@ public class VistaMapa extends JPanel {
         agregarBotonUbicacion(ubicaciones.get(24), 18, 1); // Cascada Silenciosa
         agregarBotonUbicacion(ubicaciones.get(25), 19, 1); // Torre Espectral
 
-        // Validar y repintar el panel para asegurar que se actualice visualmente
         panelMapa.revalidate();
         panelMapa.repaint();
     }
@@ -125,17 +124,17 @@ public class VistaMapa extends JPanel {
     private void agregarBotonUbicacion(String nombreUbicacion, int fila, int columna) {
         JButton botonUbicacion = new JButton(nombreUbicacion);
         botonUbicacion.setEnabled(false);
-        botonUbicacion.setFont(new Font("Arial", Font.BOLD, 12)); // Fuente de texto en negrita
-        botonUbicacion.setBackground(new Color(173, 216, 230)); // Fondo azul claro
-        botonUbicacion.setForeground(Color.BLACK); // Texto negro
-        botonUbicacion.setFocusPainted(false); // Sin borde cuando se selecciona
-        botonUbicacion.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambio de cursor al pasar por encima
+        botonUbicacion.setFont(new Font("Arial", Font.BOLD, 12)); 
+        botonUbicacion.setBackground(new Color(173, 216, 230)); 
+        botonUbicacion.setForeground(Color.BLACK); 
+        botonUbicacion.setFocusPainted(false); 
+        botonUbicacion.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         botonUbicacion.addActionListener(e -> {
-            botonUbicacion.setEnabled(false); // Deshabilitar el botón actual inmediatamente
+            botonUbicacion.setEnabled(false); 
             controlador.avanzarUbicacion(nombreUbicacion);
-            actualizarVisibilidadUbicaciones(); // Actualiza los caminos disponibles
-            mostrarMensajeEventoEspecial(nombreUbicacion); // Mostrar mensaje del evento especial
+            actualizarVisibilidadUbicaciones(); 
+            mostrarMensajeEventoEspecial(nombreUbicacion); 
         });
 
         int posicion = fila * 3 + columna;
@@ -164,14 +163,14 @@ public class VistaMapa extends JPanel {
 
         // Deshabilitar todos los botones
         for (Map.Entry<String, JButton> entry : botonesUbicaciones.entrySet()) {
-            entry.getValue().setEnabled(false); // Deshabilitar todos los botones
+            entry.getValue().setEnabled(false); 
         }
 
         // Habilitar solo los botones de los caminos disponibles
         for (String ubicacion : caminosDisponibles) {
             JButton botonSiguiente = botonesUbicaciones.get(ubicacion);
             if (botonSiguiente != null) {
-                botonSiguiente.setEnabled(true); // Habilita los botones accesibles
+                botonSiguiente.setEnabled(true); 
             }
         }
 

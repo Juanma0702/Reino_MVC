@@ -10,12 +10,12 @@ public class Mapa {
 
     public Mapa() {
         ubicaciones = new ArrayList<>();
-        configurarMapa(); // Configura las ubicaciones del mapa
-        ubicacionActual = ubicaciones.get(0); // Establece la primera ubicación como inicial
+        configurarMapa(); 
+        ubicacionActual = ubicaciones.get(0); 
     }
 
     private void configurarMapa() {
-        // Crear ubicaciones principales y bifurcaciones
+        // Creamos ubicaciones
         Ubicacion entradaReino = new Ubicacion("Entrada del Reino", true);
         Ubicacion caminoBosque = new Ubicacion("Camino del Bosque", false);
         Ubicacion bosqueEncantado = new Ubicacion("Bosque Encantado", false);
@@ -43,7 +43,7 @@ public class Mapa {
         Ubicacion cascadaSilenciosa = new Ubicacion("Cascada Silenciosa", false);
         Ubicacion torreEspectral = new Ubicacion("Torre Espectral", true);
 
-        // Configurar caminos y bifurcaciones correctamente
+        // Caminos lineales y bifurcaciones
         entradaReino.agregarCamino(caminoBosque);       // Lineal
         caminoBosque.agregarCamino(bosqueEncantado);    // Lineal
         
@@ -119,8 +119,7 @@ public class Mapa {
         ubicaciones.add(desiertoSombrio);
         ubicaciones.add(cascadaSilenciosa);
         ubicaciones.add(torreEspectral);
-        
-        // Establecer la primera ubicación como la actual
+        //Ubicacion actual y final
         ubicacionActual = entradaReino;
         ubicacionFinal = torreEspectral;
     }
@@ -134,7 +133,7 @@ public class Mapa {
     }
 
     public void avanzar(Ubicacion nuevaUbicacion) {
-        ubicacionActual = nuevaUbicacion; // Actualiza la ubicación actual
+        ubicacionActual = nuevaUbicacion;
     }
 
     public Ubicacion getUbicacionActual() {

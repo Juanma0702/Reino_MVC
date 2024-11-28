@@ -5,7 +5,7 @@ public class Arquero extends Personaje {
     private float agilidad;
 
     public Arquero(String nombre) {
-        super(nombre, 900, 900, 60,30, "Arquero");  // Valores de vida, ataque y defensa iniciales para Arquero
+        super(nombre, 900, 900, 60,30, "Arquero");
         this.punteria = 90;  // Probabilidad inicial de acierto en ataque
         this.agilidad = 30;  // Probabilidad inicial de esquivar golpes
     }

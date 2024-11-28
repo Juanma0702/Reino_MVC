@@ -28,7 +28,7 @@ public class VistaHub extends JPanel {
 
         // Configuración principal del panel
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Márgenes externos
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Título
         JLabel titulo = new JLabel("Hub Principal", JLabel.CENTER) {
@@ -58,15 +58,15 @@ public class VistaHub extends JPanel {
         };
         titulo.setFont(new Font("Arial", Font.BOLD, 30));
         titulo.setForeground(Color.WHITE);
-        titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); // Espaciado con el resto del contenido
+        titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0)); 
         add(titulo, BorderLayout.NORTH);
 
         // Panel central para los botones
         JPanel panelBotones = new JPanel(new GridBagLayout());
         panelBotones.setOpaque(false);
-        panelBotones.setBorder(BorderFactory.createEmptyBorder(100, 220, 100, 220)); // Márgenes internos
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(100, 220, 100, 220)); 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(20, 20, 20, 20); // Espaciado entre botones
+        gbc.insets = new Insets(20, 20, 20, 20); 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
@@ -101,14 +101,14 @@ public class VistaHub extends JPanel {
         JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton botonCerrar = crearBoton("Salir", "");
         panelInferior.setOpaque(false);
-        botonCerrar.setBackground(new Color(178, 34, 34)); // Fondo rojo oscuro
+        botonCerrar.setBackground(new Color(178, 34, 34)); 
         botonCerrar.setFont(new Font("Arial", Font.BOLD, 25));
         botonCerrar.setPreferredSize(new Dimension(100, 40));
         panelInferior.add(botonCerrar);
         add(panelInferior, BorderLayout.SOUTH);
 
         // Acciones de los botones
-        botonCerrar.addActionListener(e -> System.exit(0)); // Cierra la aplicación
+        botonCerrar.addActionListener(e -> System.exit(0)); // Cerramos
         botonMapa.addActionListener(e -> controlador.mostrarVistaMapa());
         botonMisiones.addActionListener(e -> controlador.mostrarVistaMisiones());
         botonEstadoPersonaje.addActionListener(e -> controlador.mostrarVistaEstadoPersonaje());
@@ -122,9 +122,9 @@ public class VistaHub extends JPanel {
         boton.setForeground(Color.BLACK);
         boton.setFocusPainted(false);
         boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        boton.setPreferredSize(new Dimension(640, 315)); // Tamaño del botón
-        boton.setMinimumSize(new Dimension(640, 315)); // Tamaño mínimo del botón
-        boton.setMaximumSize(new Dimension(640, 315)); // Tamaño máximo del botón
+        boton.setPreferredSize(new Dimension(640, 315)); 
+        boton.setMinimumSize(new Dimension(640, 315)); 
+        boton.setMaximumSize(new Dimension(640, 315)); 
 
         if (!iconoPath.isEmpty()) {
             File archivo = new File(iconoPath);

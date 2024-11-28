@@ -24,18 +24,18 @@ public class VistaSeleccionClase extends JPanel {
             System.out.println("Error al cargar la imagen de fondo: " + e.getMessage());
         }
 
-        setLayout(new BorderLayout()); // Usamos un diseño BorderLayout para organizar los componentes
+        setLayout(new BorderLayout());
 
         // Mensaje de bienvenida
         JLabel mensaje = new JLabel("Bienvenido, " + nombreJugador + ". Selecciona tu clase:", JLabel.CENTER);
         mensaje.setFont(new Font("Arial", Font.BOLD, 35));
-        mensaje.setForeground(Color.WHITE); // Color azul claro para el texto
+        mensaje.setForeground(Color.WHITE);
         add(mensaje, BorderLayout.NORTH);
 
         // Panel central para los botones
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridBagLayout()); // Usamos GridBagLayout para centrar los botones
-        panelBotones.setOpaque(false); // Fondo transparente para combinar con la imagen de fondo
+        panelBotones.setLayout(new GridBagLayout());
+        panelBotones.setOpaque(false);
 
         // Configuración de los botones
         JButton botonMago = new JButton("Mago");
@@ -43,18 +43,18 @@ public class VistaSeleccionClase extends JPanel {
         JButton botonArquero = new JButton("Arquero");
 
         // Estilo de los botones
-        Dimension buttonSize = new Dimension(500, 630); // Tamaño predefinido para los botones
+        Dimension buttonSize = new Dimension(500, 630);
 
         botonMago.setFont(new Font("Arial", Font.BOLD, 20));
         botonGuerrero.setFont(new Font("Arial", Font.BOLD, 20));
         botonArquero.setFont(new Font("Arial", Font.BOLD, 20));
 
-        botonMago.setBackground(new Color(173, 216, 230)); // Fondo azul claro
-        botonGuerrero.setBackground(new Color(255, 204, 102)); // Fondo dorado
-        botonArquero.setBackground(new Color(144, 238, 144)); // Fondo verde claro
+        botonMago.setBackground(new Color(173, 216, 230)); 
+        botonGuerrero.setBackground(new Color(255, 204, 102));
+        botonArquero.setBackground(new Color(144, 238, 144)); 
 
         // Escalar y establecer iconos
-        Dimension iconSize = new Dimension(500, 600); // Tamaño de la imagen
+        Dimension iconSize = new Dimension(500, 600); 
         botonMago.setIcon(escalarIcono(
                 "Paradigma OO\\reino\\src\\resources\\mago.png",
                 iconSize));
@@ -69,11 +69,11 @@ public class VistaSeleccionClase extends JPanel {
         botonGuerrero.setForeground(Color.BLACK);
         botonArquero.setForeground(Color.BLACK);
 
-        botonMago.setFocusPainted(false); // Sin borde cuando se selecciona
+        botonMago.setFocusPainted(false);
         botonGuerrero.setFocusPainted(false);
         botonArquero.setFocusPainted(false);
 
-        botonMago.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Cambio de cursor
+        botonMago.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
         botonGuerrero.setCursor(new Cursor(Cursor.HAND_CURSOR));
         botonArquero.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
@@ -96,7 +96,7 @@ public class VistaSeleccionClase extends JPanel {
 
         // Añadimos los botones al panel central usando GridBagLayout para centrar
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Espaciado entre botones
+        gbc.insets = new Insets(10, 10, 10, 10);
 
         // Botones en el centro
         gbc.gridx = 0;
@@ -113,7 +113,7 @@ public class VistaSeleccionClase extends JPanel {
         add(panelBotones, BorderLayout.CENTER);
 
         // Fondo general para la ventana
-        setBackground(new Color(255, 255, 255)); // Fondo blanco claro
+        setBackground(new Color(255, 255, 255));
     }
 
     @Override

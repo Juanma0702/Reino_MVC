@@ -95,7 +95,7 @@ public class Juego {
                         boolean combateFinal = ubicacion.getCriaturas().size() == 4 && ubicacion.getCriaturas().get(0) instanceof Dragon;
                         controlador.mostrarVistaCombate(resultadoCombate, victoria, combateFinal);
                     } else if (ubicacion.esNeutral()) {
-                        personajeActual.restaurarVida(); // Restaurar vida en ubicaciones neutrales.
+                        personajeActual.restaurarVida(); // Restaurar vida 
                         for (int i = personajeActual.cantidadDeNiveles(); i > 0; i--) {
                             controlador.mostrarOpcionesMejora();
                         }

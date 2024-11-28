@@ -28,7 +28,7 @@ public class VistaInventario extends JPanel {
 
         // Configuración principal del panel
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen exterior
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Título
         JLabel titulo = new JLabel("Inventario", JLabel.CENTER);
@@ -38,7 +38,7 @@ public class VistaInventario extends JPanel {
         // Panel central para la lista de inventario
         JPanel panelCentral = new JPanel();
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
-        panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         if (this.inventario.getObjetos().isEmpty()) {
             // Mostrar mensaje si el inventario está vacío
@@ -60,7 +60,7 @@ public class VistaInventario extends JPanel {
                     // Panel izquierdo: descripción del objeto
                     JPanel panelDescripcion = new JPanel();
                     panelDescripcion.setLayout(new BoxLayout(panelDescripcion, BoxLayout.Y_AXIS));
-                    panelDescripcion.setOpaque(false); // Sin color de fondo
+                    panelDescripcion.setOpaque(false);
                     List<JLabel> labels = obtenerLabels(datos);
                     for (JLabel label : labels) {
                         panelDescripcion.add(label);
@@ -69,7 +69,7 @@ public class VistaInventario extends JPanel {
 
                     // Agregar el objeto al panel central
                     panelCentral.add(panelObjeto);
-                    panelCentral.add(Box.createVerticalStrut(10)); // Espaciado entre objetos
+                    panelCentral.add(Box.createVerticalStrut(10));
                 }
             }
         }
@@ -77,7 +77,7 @@ public class VistaInventario extends JPanel {
         // Hacer el panel central scrollable
         JScrollPane scrollPane = new JScrollPane(panelCentral);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder()); // Sin bordes adicionales
+        scrollPane.setBorder(BorderFactory.createEmptyBorder()); 
         add(scrollPane, BorderLayout.CENTER);
 
         // Botón inferior para volver al Hub

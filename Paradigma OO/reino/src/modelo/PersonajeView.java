@@ -11,7 +11,7 @@ public class PersonajeView {
     private int nivelAtaque;
     private int nivelDefensa;
     private int experiencia;
-    private List<ObjetoView> inventario; // Nueva lista de objetos
+    private List<ObjetoView> inventario;
 
     public PersonajeView(String nombre, String clase, int puntosVida, int maxVida, int nivelAtaque, int nivelDefensa, int experiencia, List<ObjetoView> inventario) {
         this.nombre = nombre;

@@ -3,7 +3,7 @@ package modelo;
 public class Espectro extends Criatura {
 
     public Espectro() {
-        super(100, 65, 25, 30);  // Valores iniciales de vida, ataque, defensa y recompensa de experiencia
+        super(100, 65, 25, 30); 
     }
 
     @Override

@@ -20,7 +20,7 @@ public class VistaPrincipal extends JFrame {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setUndecorated(true);
         this.setVisible(true);  
-        this.setLayout(new BorderLayout()); // Usa BorderLayout para centrar el contenido
+        this.setLayout(new BorderLayout()); 
     }
 
     public void setVista(JPanel nuevaVista) {

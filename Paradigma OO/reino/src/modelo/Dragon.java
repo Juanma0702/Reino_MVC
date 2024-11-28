@@ -3,7 +3,7 @@ package modelo;
 public class Dragon extends Criatura {
 
     public Dragon() {
-        super(150, 55, 40, 50);  // Valores iniciales de vida, ataque, defensa y recompensa de experiencia
+        super(150, 55, 40, 50);
     }
 
     @Override

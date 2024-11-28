@@ -3,7 +3,7 @@ package modelo;
 public class Mago extends Personaje {
 
     public Mago(String nombre) {
-        super(nombre, 500, 500, 70,30, "Mago");  // Valores de vida, ataque y defensa iniciales para Mago
+        super(nombre, 500, 500, 70,30, "Mago");
     }
 
     @Override

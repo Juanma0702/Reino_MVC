@@ -8,7 +8,7 @@ import controlador.ControladorJuego;
 
 public class VistaCombate extends JPanel {
 
-    private JEditorPane areaCombate; // Usar JEditorPane en lugar de JTextArea
+    private JEditorPane areaCombate; 
     private boolean victoria;
     private ControladorJuego controlador;
     private boolean combateFinal;
@@ -18,15 +18,13 @@ public class VistaCombate extends JPanel {
         this.victoria = victoria;
         this.combateFinal = combateFinal;
 
-        // Configuración del panel
         setLayout(new BorderLayout());
 
-        // Usamos JEditorPane que soporta HTML
         areaCombate = new JEditorPane();
-        areaCombate.setEditable(false); // No editable por el usuario
-        areaCombate.setContentType("text/html"); // Establecemos el tipo de contenido a HTML
-        areaCombate.setFont(new Font("Monospaced", Font.PLAIN, 14)); // Puedes cambiar la fuente aquí
-        areaCombate.setText(resultadoCombate); // Establecer el resultado del combate
+        areaCombate.setEditable(false); 
+        areaCombate.setContentType("text/html");
+        areaCombate.setFont(new Font("Monospaced", Font.PLAIN, 14)); 
+        areaCombate.setText(resultadoCombate); 
         JScrollPane scrollPane = new JScrollPane(areaCombate);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -36,7 +34,6 @@ public class VistaCombate extends JPanel {
     private void mostrarResultado() {
         JPanel panelBotones = new JPanel();
 
-        // Botón Continuar
         JButton continuarButton = new JButton("Continuar");
         continuarButton.addActionListener(e -> {
             if (!victoria) {
@@ -48,13 +45,13 @@ public class VistaCombate extends JPanel {
                     JOptionPane.INFORMATION_MESSAGE
                 );
                 if (controlador != null) {
-                    System.exit(0); // Cierra la aplicación
+                    System.exit(0); // Cerramos
                 }
             } else {
                 areaCombate.setText(areaCombate.getText() + "<br>¡Has ganado el combate! Felicitaciones.");
 
                 if (controlador != null) {
-                    controlador.mostrarVistaMapa(); // Vuelve al mapa
+                    controlador.mostrarVistaMapa();
                 }
             }
             if (combateFinal) {
@@ -64,7 +61,7 @@ public class VistaCombate extends JPanel {
                     "Juego Completado",
                     JOptionPane.INFORMATION_MESSAGE
                 );
-                System.exit(0); // Cierra la aplicación
+                System.exit(0); // Cerramos
             }
         });
 
@@ -79,7 +76,6 @@ public class VistaCombate extends JPanel {
         validate();
     }
 
-    // Método para mostrar esta vista desde el controlador
     public static void mostrar(ControladorJuego controlador, String resultadoCombate, boolean victoria, boolean combateFinal) {
         controlador.cambiarVista(new VistaCombate(controlador, resultadoCombate, victoria, combateFinal));
     }

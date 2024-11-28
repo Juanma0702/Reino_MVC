@@ -14,22 +14,20 @@ import modelo.PersonajeView;
 public class VistaEstadoPersonaje extends JPanel {
     PersonajeView personajeView;
     private ControladorJuego controlador;
-    private BufferedImage backgroundImage; // Añadir esta línea
+    private BufferedImage backgroundImage;
 
     public VistaEstadoPersonaje(ControladorJuego controlador, PersonajeView personajeView) {
         this.controlador = controlador;
         this.personajeView = personajeView;
 
-        // Cargar la imagen de fondo
         try {
             backgroundImage = ImageIO.read(new File("Paradigma OO\\reino\\src\\resources\\vistaestado.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Configuración del panel principal
         setLayout(new BorderLayout());
-        setBackground(new Color(240, 240, 240)); // Fondo claro
+        setBackground(new Color(240, 240, 240));
 
         // Título
         JLabel titulo = new JLabel("Estado del Personaje", JLabel.CENTER);
@@ -40,14 +38,14 @@ public class VistaEstadoPersonaje extends JPanel {
 
         // Panel con el estado del personaje
         JPanel panelEstado = getPanelEstado();
-        panelEstado.setOpaque(false); // Hacer el panel transparente
+        panelEstado.setOpaque(false);
         add(panelEstado, BorderLayout.CENTER);
 
         // Botón para volver al hub
         JButton botonVolverHub = new JButton("Volver al Hub");
         botonVolverHub.setFont(new Font("Arial", Font.PLAIN, 16));
-        botonVolverHub.setBackground(new Color(173, 216, 230)); // Azul claro
-        botonVolverHub.setForeground(new Color(0, 51, 102)); // Azul oscuro
+        botonVolverHub.setBackground(new Color(173, 216, 230));
+        botonVolverHub.setForeground(new Color(0, 51, 102)); 
         botonVolverHub.setFocusPainted(false);
         botonVolverHub.setCursor(new Cursor(Cursor.HAND_CURSOR));
         add(botonVolverHub, BorderLayout.SOUTH);
@@ -65,16 +63,15 @@ public class VistaEstadoPersonaje extends JPanel {
     // Método para crear y devolver el panel con el estado del personaje
     private JPanel getPanelEstado() {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1, 10, 10)); // Espaciado entre elementos
-        panel.setOpaque(false); // Hacer el panel transparente
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margen interno
+        panel.setLayout(new GridLayout(0, 1, 10, 10));
+        panel.setOpaque(false);
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Panel semitransparente para las etiquetas de texto
         JPanel panelTexto = new JPanel();
-        panelTexto.setLayout(new GridLayout(0, 1, 10, 10)); // Espaciado entre elementos
-        panelTexto.setBackground(new Color(0, 0, 0, 150)); // Fondo negro semitransparente
-        panelTexto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margen interno
-
+        panelTexto.setLayout(new GridLayout(0, 1, 10, 10));
+        panelTexto.setBackground(new Color(0, 0, 0, 150));
+        panelTexto.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         // Mostrar los datos del personaje con estilo y letras blancas
         JLabel n = new JLabel("Nombre: " + personajeView.getNombre(), JLabel.CENTER);
         n.setFont(new Font("Arial", Font.BOLD, 18));

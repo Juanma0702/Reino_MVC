@@ -4,13 +4,13 @@ public abstract class Criatura {
     protected int puntosVida;
     protected int nivelAtaque;
     protected int nivelDefensa;
-    protected int experienciaOtorgada; // Consistentemente usamos esta variable
+    protected int experienciaOtorgada;
 
     public Criatura(int puntosVida, int nivelAtaque, int nivelDefensa, int experienciaOtorgada) {
         this.puntosVida = puntosVida;
         this.nivelAtaque = nivelAtaque;
         this.nivelDefensa = nivelDefensa;
-        this.experienciaOtorgada = experienciaOtorgada; // Inicializar correctamente
+        this.experienciaOtorgada = experienciaOtorgada; 
     }
 
     public boolean sigueVivo() {
@@ -18,10 +18,10 @@ public abstract class Criatura {
     }
 
     public int getExperienciaOtorgada() {
-        return experienciaOtorgada; // Usamos esta variable en todo el código
+        return experienciaOtorgada; 
     }
     
-    // Sistema de combate
+    
     public abstract int recibirDanio(int danio, Personaje p) ;
 
     public abstract int hacerDanio(Personaje p);

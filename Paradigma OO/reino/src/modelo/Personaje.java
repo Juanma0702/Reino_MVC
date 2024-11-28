@@ -18,7 +18,7 @@ public abstract class Personaje {
         this.maxVida = maxVida;
         this.nivelAtaque = nivelAtaque;
         this.nivelDefensa = nivelDefensa;
-        this.experiencia = 0; // Inicializamos la experiencia en 0
+        this.experiencia = 0;
         this.clase = clase;
     }
 
@@ -51,8 +51,7 @@ public abstract class Personaje {
     }
 
     public int cantidadDeNiveles() {
-        // Implementar la lógica para calcular la cantidad de niveles
-        return experiencia / 100; // Ejemplo: 1 nivel por cada 100 puntos de experiencia
+        return experiencia / 100;
     }
 
     public List<Objeto> getInventario() {
